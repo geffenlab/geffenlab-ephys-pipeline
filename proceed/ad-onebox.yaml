@@ -43,6 +43,9 @@ steps:
 
   - name: kilosort4
     image: ghcr.io/benjamin-heasly/geffenlab-kilosort4:v0.0.3
+    # https://docs.pytorch.org/docs/2.12/notes/cuda.html#optimizing-memory-usage-with-pytorch-alloc-conf
+    environment:
+      PYTORCH_ALLOC_CONF: "expandable_segments:True"
     gpus: $gpus
     command: [
       --input-dir, "$processed_data_root/$experimenter/$subject/$date/catgt",
@@ -112,6 +115,7 @@ steps:
 
   - name: bombcell
     image: ghcr.io/benjamin-heasly/geffenlab-bombcell:v0.0.6
+    # https://github.com/joblib/loky/blob/master/loky/backend/context.py#L88
     environment:
       LOKY_MAX_CPU_COUNT: "10"
     command: [

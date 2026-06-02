@@ -89,6 +89,7 @@ steps:
 
   - name: bombcell
     image: ghcr.io/benjamin-heasly/geffenlab-bombcell:v0.0.6
+    # https://github.com/joblib/loky/blob/master/loky/backend/context.py#L88
     environment:
       LOKY_MAX_CPU_COUNT: "10"
     command: [
