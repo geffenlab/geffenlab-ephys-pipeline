@@ -1,7 +1,7 @@
 """
 This script is for archiving raw session data from cortex to the lab's S3 bucket.
 
-It searches on cortex within the lab's raw_data directory (/vol/cortex/cd5/geffenlab/raw_data/),
+It searches on cortex within the lab's raw_data directory (/cdz/geffenlab/raw_data/),
 to find data for a given experimenter, subject, and date.
 It copies the session data to S3, using the lab's standard directory layout.
 It adds tags to uploaded data including the year and a given project_name.
@@ -195,7 +195,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "--raw-data-root", "-R",
         type=str,
         help="Remote root directory containing lab raw data. (default: %(default)s)",
-        default="/vol/cortex/cd5/geffenlab/raw_data/"
+        default="/cdz/geffenlab/raw_data/"
     )
     parser.add_argument(
         "--experimenter", "-e",
@@ -250,13 +250,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "--aws-shared-credentials-file", "-C",
         type=str,
         help="Location of AWS credentials, eg from 'aws configure'. (default: %(default)s)",
-        default="/vol/cortex/cd5/geffenlab/.aws/credentials"
+        default="/cdz/geffenlab/.aws/credentials"
     )
     parser.add_argument(
         "--aws-config-file", "-c",
         type=str,
         help="Location of AWS config, eg from 'aws configure'. (default: %(default)s)",
-        default="/vol/cortex/cd5/geffenlab/.aws/config"
+        default="/cdz/geffenlab/.aws/config"
     )
     parser.add_argument(
         "--delete",

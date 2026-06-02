@@ -168,7 +168,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "--data-root",
         type=str,
         help="Root folder with results from Kilosort/Phy/Bombcell. (default: %(default)s)",
-        default="/vol/cortex/cd5/geffenlab/processed_data"
+        default="/cdz/geffenlab/processed_data"
     )
     parser.add_argument(
         "--experimenter",

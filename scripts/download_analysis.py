@@ -1,7 +1,7 @@
 """
 This script is for downloading pipeline analysis results from cortex to your local machine.
 
-It searches on cortex within the lab's analysis directory (/vol/cortex/cd5/geffenlab/analysis/),
+It searches on cortex within the lab's analysis directory (/cdz/geffenlab/analysis/),
 to find results for a given experimenter, subject, and date.
 It copies the session results to a local directory, like ./pipeline-analysis/
 
@@ -110,7 +110,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "--analysis-root", "-A",
         type=str,
         help="Remote root directory containing lab analysis results. (default: %(default)s)",
-        default="/vol/cortex/cd5/geffenlab/analysis/"
+        default="/cdz/geffenlab/analysis/"
     )
     parser.add_argument(
         "--experimenter", "-e",
