@@ -92,7 +92,99 @@ proceed run proceed/ad-onebox.yaml --args experimenter=AD subject=AD025 date="03
 
 These procesing runs may take a few hours to complete.
 
-## Configuring pipelines
+# Stopping a run in progress
+
+You can halt a pipeline run in progress using the `ctrl`+`c` keystroke.  This is the same keystroke used on Linux/CLI in general, to send an interrupt signal to a running process.
+
+Depending on the step that's running, and how this process handles the intrrrupt signal, you might need to repeat the keystroke (say, three times in a row).
+The running process should stop and you should see a `KeyboardInterrupt` logged to the console.
+
+Stopping a pipeline run means the step that was currently running will not be marked as completed.
+If you then restart the same pipeline with the same data, Proceed should resume from the beginning of the step that was interrupted.
+
+# Choosing a GPU
+
+Since cortex is a shared system you might need to coordinate useage of resources like GPUs.
+You can choose which GPU device to use by passing in a value for the `gpus` pipeline argument.
+For example:
+
+```
+proceed run proceed/as-nidq.yaml --args experimenter=BH subject=AS20-demo date="03112025" gpus="[2]"
+```
+
+See [pipeline-config](./pipeline-config.md#passing-arguments-to-a-pipeline-via-proceed-run-on-the-command-line) for a little more detail about pipeline args.
+
+## `nvidia-smi`
+
+How do you know which GPUs exist and which ones are free vs already in use by others?
+Cortex has the `nvidia-smi` tool to print GPU information.
+For example:
+
+```
+$ nvidia-smi
+
+Tue Jun  2 10:10:00 2026       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.288.01             Driver Version: 535.288.01   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA RTX A4500               Off | 00000000:27:00.0 Off |                  Off |
+| 39%   69C    P2             167W / 200W |  11251MiB / 20470MiB |    100%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+|   1  NVIDIA RTX A4500               Off | 00000000:38:00.0 Off |                  Off |
+| 39%   67C    P2             158W / 200W |  10382MiB / 20470MiB |     54%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+|   2  NVIDIA RTX A4500               Off | 00000000:A8:00.0 Off |                  Off |
+| 30%   24C    P8              17W / 200W |     12MiB / 20470MiB |      0%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+|   3  NVIDIA RTX A4500               Off | 00000000:B8:00.0 Off |                  Off |
+| 30%   25C    P8              18W / 200W |     12MiB / 20470MiB |      0%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|    0   N/A  N/A     14957      G   /usr/lib/xorg/Xorg                            4MiB |
+|    0   N/A  N/A     20040      G   /usr/lib/xorg/Xorg                           37MiB |
+|    0   N/A  N/A     23113      G   ...libexec/gnome-remote-desktop-daemon        3MiB |
+|    0   N/A  N/A     29488    C+G   ...1/usr/bin/snapd-desktop-integration       11MiB |
+|    0   N/A  N/A    265030      G   /usr/lib/xorg/Xorg                           46MiB |
+|    0   N/A  N/A    265403      G   ...libexec/gnome-remote-desktop-daemon        3MiB |
+|    0   N/A  N/A    265813    C+G   ...1/usr/bin/snapd-desktop-integration       11MiB |
+|    0   N/A  N/A    465563      C   python                                    10086MiB |
+|    0   N/A  N/A    660638      G   /usr/lib/xorg/Xorg                          427MiB |
+|    0   N/A  N/A    661748      G   ...libexec/gnome-remote-desktop-daemon        3MiB |
+|    0   N/A  N/A    664236    C+G   ...1/usr/bin/snapd-desktop-integration       11MiB |
+|    0   N/A  N/A   1223178      G   /usr/lib/xorg/Xorg                          266MiB |
+|    0   N/A  N/A   1228031      G   ...libexec/gnome-remote-desktop-daemon        3MiB |
+|    0   N/A  N/A   2065648      C   python                                      256MiB |
+|    1   N/A  N/A     14957      G   /usr/lib/xorg/Xorg                            4MiB |
+|    1   N/A  N/A   2085820      C   python                                      256MiB |
+|    1   N/A  N/A   2761087      C   python                                    10086MiB |
+|    2   N/A  N/A     14957      G   /usr/lib/xorg/Xorg                            4MiB |
+|    3   N/A  N/A     14957      G   /usr/lib/xorg/Xorg                            4MiB |
++---------------------------------------------------------------------------------------+
+```
+
+This summarizes the installed GPU devices and processes running on them.
+
+The top section shows four GPUs, with indexes `0-3`.  This example shows significant usage on devices `0` and `1`, for example `11251MiB / 20470MiB` memory already in use.  It shows low usage on devices `2` and `3`, only `12MiB / 20470MiB` in use.
+
+The bottom section shows processes running on each GPU.  This is consistent with the memory usage above -- 14 processes running on device `0` and three on device `1`.  But devices `2` and `3` are relatively quiet with only one process each.
+
+For this example it would make sense to choose either `gpus="[2]"` or `gpus="[3]"`.
+
+
+# Configuring pipelines
 
 Please see [pipeline-config.md](./pipeline-config.md) for more details about how to configure various pipeline options.
 For a new rig, it might be that you can reuse an existing pipeline, and only have to specify a few rig-specific specific parameters like CatGT or TPrime arguments, or probe-specific parameters for Kilosort4 or Bombcell.
@@ -238,11 +330,14 @@ for index, dataset in enumerate(datasets):
         logging.info(f"Starting on dataset {index + 1}/{len(datasets)}: {dataset}\n")
 
         # Call proceed -- this is equivalent to "proceed run ..." from the command line.
-        # You could add other command line arguments here, including --force-rerun or --step-names.
+        # You could add other command line arguments here, like --force-rerun, --step-names, --gpus, etc.
         (experimenter, subject, date) = dataset
         proceed_args = [
             "run", pipeline_yaml,
-            "--args", f"experimenter={experimenter}", f"subject={subject}", f"date={date}"
+            "--args", f"experimenter={experimenter}", f"subject={subject}", f"date={date}",
+            #"--force-rerun",
+            #"--step-names", "bombcell",
+            #"--gpus", "[2]"
         ]
         exit_code = main(proceed_args)
 
