@@ -96,7 +96,7 @@ These procesing runs may take a few hours to complete.
 
 You can halt a pipeline run in progress using the `ctrl`+`c` keystroke.  This is the same keystroke used on Linux/CLI in general, to send an interrupt signal to a running process.
 
-Depending on the step that's running, and how this process handles the intrrrupt signal, you might need to repeat the keystroke (say, three times in a row).
+Depending on the step that's running, and how this process handles the interrupt signal, you might need to repeat the keystroke (say, three times in a row).
 The running process should stop and you should see a `KeyboardInterrupt` logged to the console.
 
 Stopping a pipeline run means the step that was currently running will not be marked as completed.
@@ -104,20 +104,22 @@ If you then restart the same pipeline with the same data, Proceed should resume 
 
 # Choosing a GPU
 
-Since cortex is a shared system you might need to coordinate useage of resources like GPUs.
-You can choose which GPU device to use by passing in a value for the `gpus` pipeline argument.
+Since cortex is a shared system you might need to coordinate usage of GPUs and other resources.
+You can specify a GPU device via the `gpus` pipeline argument.
 For example:
 
 ```
 proceed run proceed/as-nidq.yaml --args experimenter=BH subject=AS20-demo date="03112025" gpus="[2]"
 ```
 
-See [pipeline-config](./pipeline-config.md#passing-arguments-to-a-pipeline-via-proceed-run-on-the-command-line) for a little more detail about pipeline args.
+See [pipeline-config](./pipeline-config.md#passing-arguments-to-a-pipeline-via-proceed-run-on-the-command-line) for more about pipeline args, including `gpus`.
 
 ## `nvidia-smi`
 
-How do you know which GPUs exist and which ones are free vs already in use by others?
-Cortex has the `nvidia-smi` tool to print GPU information.
+The example above specified the gpu device with index `2`.
+But how do you know which GPUs exist and which ones are free vs already in use by others?
+Cortex has the `nvidia-smi` tool, which prints GPU information.
+
 For example:
 
 ```
@@ -177,12 +179,13 @@ Tue Jun  2 10:10:00 2026
 
 This summarizes the installed GPU devices and processes running on them.
 
-The top section shows four GPUs, with indexes `0-3`.  This example shows significant usage on devices `0` and `1`, for example `11251MiB / 20470MiB` memory already in use.  It shows low usage on devices `2` and `3`, only `12MiB / 20470MiB` in use.
+The top section lists four GPUs with indexes `0`-`3`.  Devices `0` and `1` seem to be busy, with `11251MiB / 20470MiB` of GPU memory already in use.  Devices `2` and `3` seem to be free, with only `12MiB / 20470MiB` in use.
 
-The bottom section shows processes running on each GPU.  This is consistent with the memory usage above -- 14 processes running on device `0` and three on device `1`.  But devices `2` and `3` are relatively quiet with only one process each.
+The bottom section shows processes running on each GPU.  This is consistent with the memory usage above -- device `0` has 14 processes running and device `1` has three.  But devices `2` and `3` are relatively quiet with only one process each.
 
-For this example it would make sense to choose either `gpus="[2]"` or `gpus="[3]"`.
+Based on this summary, it would make sense to choose either `gpus="[2]"` or `gpus="[3]"`.
 
+You can speify GPUs by device index (as above) or by UUID (see `nvidia-smi -L` for device UUIDs).
 
 # Configuring pipelines
 
