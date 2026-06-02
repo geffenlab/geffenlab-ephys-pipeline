@@ -269,3 +269,43 @@ hello-world:latest   1b44b5a3e06a       10.1kB             0B
 At first `hello-world` might be the only image present.
 
 But now you should be ready to run pipelines again, and see those larger images saved outside of your home directory.
+
+# Un-moving the Docker data directory
+
+Our Docker images may change over time, and so may the storage situation on cortex!
+In case you want to undo moving the Docker data directory, here are some comands:
+
+Undo the alternative data directory:
+
+```
+# clean up cached images to make the move faster
+$ docker system prune --all
+
+# stop Docker
+$ systemctl --user stop docker
+
+# un-link to the alternative data directory
+rm ~/.local/share/docker
+
+# move docker data back to home
+$ mv /vol/cortex/cd5/geffenlab/docker-data/ben/docker ~/.local/share/docker
+
+# restart docker
+$ systemctl --user start docker
+```
+
+Verify docker works from default data directory within home:
+
+```
+# Confirm you can run containers
+$ docker run --rm hello-world
+
+# Confirm data directory
+$ docker info | grep "Docker Root Dir"
+```
+
+If all looks good, clean up the alternative data directory:
+
+```
+$ rm -rf /vol/cortex/cd5/geffenlab/docker-data/ben
+```
