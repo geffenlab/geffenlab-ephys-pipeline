@@ -30,7 +30,7 @@ Finally the script will prompt you for a project name, for tagging the data obje
 ```
 $ python archive_data.py --delete
 
-2026-05-14 12:46:14,842 [INFO] Archiving files within raw data root: /vol/cortex/cd5/geffenlab/raw_data
+2026-05-14 12:46:14,842 [INFO] Archiving files within raw data root: /cdz/geffenlab/raw_data
 Experimenter initials: BH
 2026-05-14 12:46:17,835 [INFO] Archiving files for experimenter: BH
 Subject ID: AS20-demo
@@ -44,8 +44,8 @@ Project name (for tag 'project_name' on stored objects): demo
 2026-05-14 12:46:29,163 [INFO] Using S3 bucket: upenn-research.geffen-lab-01.us-east-1
 2026-05-14 12:46:29,163 [INFO] Using S3 bucket path prefix: cortex/raw_data
 2026-05-14 12:46:29,163 [INFO] Using S3 storage class: DEEP_ARCHIVE
-2026-05-14 12:46:29,163 [INFO] Using AWS credentials from: /vol/cortex/cd5/geffenlab/.aws/credentials
-2026-05-14 12:46:29,163 [INFO] Using AWS config from: /vol/cortex/cd5/geffenlab/.aws/config
+2026-05-14 12:46:29,163 [INFO] Using AWS credentials from: /cdz/geffenlab/.aws/credentials
+2026-05-14 12:46:29,163 [INFO] Using AWS config from: /cdz/geffenlab/.aws/config
 2026-05-14 12:46:29,163 [WARNING] Deleting local files after archiving.
 ```
 
@@ -58,8 +58,8 @@ Before archiving, the script will show which files it plans to archive to S3, al
 ```
 2026-05-14 12:46:29,163 [INFO] Looking for session date: 2025-03-11 AKA 03112025
 2026-05-14 12:46:29,163 [INFO] Using these tags for this date: {'experimenter': 'BH', 'subject': 'AS20-demo', 'year': '2025', 'month': '03', 'day': '11', 'project_name': 'demo'}
-2026-05-14 12:46:29,164 [INFO] Found 6 files within: /vol/cortex/cd5/geffenlab/raw_data/BH/AS20-demo/03112025
-2026-05-14 12:46:29,164 [INFO] Planning to archive 6 files within /vol/cortex/cd5/geffenlab/raw_data/BH/AS20-demo:
+2026-05-14 12:46:29,164 [INFO] Found 6 files within: /cdz/geffenlab/raw_data/BH/AS20-demo/03112025
+2026-05-14 12:46:29,164 [INFO] Planning to archive 6 files within /cdz/geffenlab/raw_data/BH/AS20-demo:
 2026-05-14 12:46:29,164 [INFO]   03112025/behavior/AS20_031125_trainingSingle6Tone2024_0_39.txt
 2026-05-14 12:46:29,164 [INFO]   03112025/behavior/AS20_031125_trainingSingle6Tone2024_0_39.mat
 2026-05-14 12:46:29,164 [INFO]   03112025/ecephys/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.nidq.bin
@@ -75,7 +75,7 @@ If you do type `yes` the script will upload files to S3.:
 
 ```
 2026-05-14 12:46:31,091 [WARNING] Proceeding to archive files.
-2026-05-14 12:46:31,200 [INFO] Found credentials in shared credentials file: /vol/cortex/cd5/geffenlab/.aws/credentials
+2026-05-14 12:46:31,200 [INFO] Found credentials in shared credentials file: /cdz/geffenlab/.aws/credentials
 2026-05-14 12:46:31,311 [INFO] Archiving s3://upenn-research.geffen-lab-01.us-east-1/cortex/raw_data/BH/AS20-demo/03112025/behavior/AS20_031125_trainingSingle6Tone2024_0_39.txt
 2026-05-14 12:46:31,485 [INFO] Archiving s3://upenn-research.geffen-lab-01.us-east-1/cortex/raw_data/BH/AS20-demo/03112025/behavior/AS20_031125_trainingSingle6Tone2024_0_39.mat
 2026-05-14 12:46:31,597 [INFO] Archiving s3://upenn-research.geffen-lab-01.us-east-1/cortex/raw_data/BH/AS20-demo/03112025/ecephys/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.nidq.bin
