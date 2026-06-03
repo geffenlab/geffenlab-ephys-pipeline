@@ -97,8 +97,4 @@ If you provided the `--delete` flag, the script will then delete the archived fi
 2026-05-14 12:46:41,362 [INFO] Deleting BH/AS20-demo/03112025/ecephys/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.imec0.ap.meta
 ```
 
-The files for the chosen session(s) should then be present in the lab's S3 bucket.  If you have a Penn AWS account and permission to view the lab's bucket, you should be able to see the archived files in the AWS web UI.  For example: [s3://upenn-research.geffen-lab-01.us-east-1/cortex/raw_data/BH/AS20-demo/03112025/](https://us-east-1.console.aws.amazon.com/s3/buckets/upenn-research.geffen-lab-01.us-east-1?region=us-east-1&prefix=cortex/raw_data/BH/AS20-demo/03112025/&showversions=false).
-
-If you navigate to an individual file, like [s3://upenn-research.geffen-lab-01.us-east-1/cortex/raw_data/BH/AS20-demo/03112025/ecephys/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.nidq.meta](https://us-east-1.console.aws.amazon.com/s3/object/upenn-research.geffen-lab-01.us-east-1?region=us-east-1&prefix=cortex/raw_data/BH/AS20-demo/03112025/ecephys/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.nidq.meta), and scroll down to the "Tags" section, you can see the tags that were added.
-
 ![Web broswer screen shot of tags added to an S3 storage object](./s3-object-tags.png)
