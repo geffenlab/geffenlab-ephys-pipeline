@@ -112,13 +112,12 @@ $ docker info | grep "Docker Root Dir"
 Docker Root Dir: /home/ben/.local/share/docker
 ```
 
-This confirms that Docker is saving images and other data within the user's home directory at `/home/ben/.local/share/docker`.
-
-In this example the username is `ben`.
-You must use your own username, instead.
-
 If your Docker system is not running, the command above might return an error.
 That's OK, you can move on to the next step.
+
+If your Docker system is running, this can confirm that Docker is saving images and other data within the user's home directory at `/home/ben/.local/share/docker`.
+In this example the username is `ben`.
+You should see your own username, instead.
 
 ## stop Docker
 
