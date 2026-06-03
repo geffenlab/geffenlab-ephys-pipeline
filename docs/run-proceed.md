@@ -349,7 +349,7 @@ for index, dataset in enumerate(datasets):
         logging.info(f"Finished dataset {index + 1}/{len(datasets)}: {dataset}\n")
 
     except Exception as e:
-        logging.error(f"Error processing dataset {index + 1}/{len(datasets)}: {dataset}:")
+        logging.error(f"Error processing dataset {index + 1}/{len(datasets)}: {dataset}:", exc_info=True)
         logging.error(f"{e}\n")
         exceptions.append((dataset, e))
 
