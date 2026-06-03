@@ -333,7 +333,7 @@ for index, dataset in enumerate(datasets):
         logging.info(f"Starting on dataset {index + 1}/{len(datasets)}: {dataset}\n")
 
         # Call proceed -- this is equivalent to "proceed run ..." from the command line.
-        # You could add other command line arguments here, like args ... gpus, --force-rerun, --step-names, etc.
+        # You could add other command line arguments here, like --args gpus=[x], --force-rerun, --step-names, etc.
         (experimenter, subject, date) = dataset
         proceed_args = [
             "run", pipeline_yaml,
