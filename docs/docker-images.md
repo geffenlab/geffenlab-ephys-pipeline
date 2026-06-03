@@ -32,7 +32,7 @@ If you know that you no longer need an image, you must delete it manually.
 For example, as we make fixes and improvements to pipeline steps we'll need to download newer versions of our images.
 From time to time you can can delete older, stale image versions.
 
-The listing above shows two versions of the same `geffenlab-spikeglx-tools` image:
+The listing above shows two versions of the same `geffenlab-spikeglx-tools` image -- specifically:
 
 ```
 IMAGE                                                      ID             DISK USAGE   CONTENT SIZE   EXTRA
@@ -90,44 +90,17 @@ Are you sure you want to continue? [y/N] y
 Total reclaimed space: 0B
 ```
 
-# Docker data in your home directory
+# Configure your rootless Docker data directory
 
-On the cortex server, we use rootles Docker.
+On the cortex server we use rootles Docker.
 This is good because it means you can't use Docker to gain root access and accidentally break the system.
 
-But, this also means that by default Docker stores image data within your home directory.
-The images can consume much of your cortex home directory disk quota.
-As of writing, the default quota was about 50GB and the Docker images listed above took up about 20GB -- clost to half of the quota.
+However, by default, rootless Docker will store images and other data within your home directory.
+This is currently not supported on cortex (as of writing in June 2026).
+The reason has to do with file system types: the `zfs` file system that helps cortex stay performant in general does not support Docker's `overlay2` file system.
 
-The default location for Docker image cache is in your home directory at `~/.local/share/docker`.
-You can check the size of this directory (or any directory!) with the `du` command.
-
-You might see disk usage like this:
-
-```
-$ du -d1 -h ~/.local/share/docker
-
-4.0K    /home/ben/.local/share/docker/runtimes
-21G     /home/ben/.local/share/docker/overlay2      <--- large
-37M     /home/ben/.local/share/docker/image
-8.0K    /home/ben/.local/share/docker/plugins
-4.0K    /home/ben/.local/share/docker/containers
-64K     /home/ben/.local/share/docker/network
-4.0K    /home/ben/.local/share/docker/swarm
-28K     /home/ben/.local/share/docker/volumes
-4.0K    /home/ben/.local/share/docker/tmp
-392K    /home/ben/.local/share/docker/containerd
-108K    /home/ben/.local/share/docker/buildkit
-22G     /home/ben/.local/share/docker
-```
-
-Note `21G` of images stored in `/home/ben/.local/share/docker/overlay2`.
-Those are the file system snapshots that make up our Docker images and provide reproducible environments for our processing steps.
-
-# Moving the Docker data directory
-
-You can configure your rootless Docker to save images and other data to a different location, outside of your home directory.
-On cortex you can choose a location within `/vol/cortex/cd5/geffenlab/`.
+So, you must configure your rootless Docker to store data on a separate volume: `/vol/cortex/nvme-infra`.
+Here's how you can do that.
 
 ## confirm the Docker data directory
 
@@ -144,32 +117,12 @@ This confirms that Docker is saving images and other data within the user's home
 In this example the username is `ben`.
 You must use your own username, instead.
 
-## clean up existing images
-
-Before moving to a new Docker data directory it can be helpful to clean up the current data directory.
-You can do this with `docker system prune`.
-Adding the `--all` flag asks Docker to clean up completely, instead of keeping some images.
-
-```
-$ docker system prune --all
-
-WARNING! This will remove:
-  - all stopped containers
-  - all networks not used by at least one container
-  - all images without at least one container associated to them
-  - all build cache
-
-Are you sure you want to continue? [y/N] y
-Total reclaimed space: 21GB
-```
-
-The first time you run this, it might free up a lot of space.
-It will remove images that we want to use for pipelines, but Proceed will automatically download these again as needed.
-It will also remove any cruft that we don't need to move -- or can't move due to Docker-managed file permissions.
+If your Docker system is not running, the command above might return an error.
+That's OK, you can move on to the next step.
 
 ## stop Docker
 
-Stop your Docker system process while the data move is happening.
+Stop your Docker system process so that we can reconfigure the data directory.
 With rootless Docker, this will only affect your cortex user, not anyone else.
 
 ```
@@ -184,51 +137,76 @@ $ docker images
 failed to connect to the docker API at unix:///run/user/10078/docker.sock; check if the path is correct and if the daemon is running: dial unix /run/user/10078/docker.sock: connect: no such file or directory
 ```
 
-## move your Docker data directory
+## change your Docker data directory
 
 Create a new directory to hold your Docker images and other data.
-A directory within `/vol/cortex/cd5/geffenlab/` won't count against your home directory quota.
-
-Replace the username `ben` with your own cortex username.
+The standard data directory name should fit this pattern:
 
 ```
-$ mkdir -p /vol/cortex/cd5/geffenlab/docker-data/ben
+/vol/cortex/nvme-infra/LABNAME/USERNAME/docker-rootless
 ```
 
-Move your existing Docker data to the new location.
+Where `LABNAME` is `geffenlab` and `USERNAME` is your cortex username.
+Here's a concrete example for cortex user `ben`:
 
 ```
-$ mv ~/.local/share/docker /vol/cortex/cd5/geffenlab/docker-data/ben/docker
+/vol/cortex/nvme-infra/geffenlab/ben/docker-rootless
 ```
 
-## create a link from old location to new
-
-Create a file system link from the old Docker data location to the new location.
+To create your data directory:
 
 ```
-$ ln -s /vol/cortex/cd5/geffenlab/docker-data/ben/docker ~/.local/share/docker
+mkdir -p /vol/cortex/nvme-infra/geffenlab/ben/docker-rootless
 ```
 
-Docker will still look for `~/.local/share/docker` when it wants to store data.  But now, it will find that this is a link to the new location within `/vol/cortex/cd5/geffenlab`.
+## point your Docker at your data directory
 
-You can confirm the link with `ls`:
+Your Docker system process will look for a configuraiton file in your home directory at `~/.config/docker/daemon.json`.
+(It's OK for the configuration file to be located in your home dir.)
+
+Check whether this file already exists:
 
 ```
-$ ls -alth ~/.local/share/docker
-
-lrwxrwxrwx 1 ben geffenlab 48 Feb 27 15:29 /home/ben/.local/share/docker -> /vol/cortex/cd5/geffenlab/docker-data/ben/docker
+cat ~/.config/docker/daemon.json
 ```
+
+If the file does exist, you should edit it.
+
+If the file does not exist yet, you can create it and add the necessary config like so:
+
+```
+mkdir -p ~/.config/docker/
+echo '{ "data-root": "/vol/cortex/nvme-infra/geffenlab/ben/docker-rootless" }'| tee ~/.config/docker/daemon.json
+```
+
+Don't forget to replace `ben` with your own cortex username.
+
+Double check this configuration file, after creating or editing it:
+
+```
+cat ~/.config/docker/daemon.json
+```
+
+You should have one `"data-root":` property, pointing to your own data directory within `/vol/cortex/nvme-infra`.
 
 ## restart Docker
 
-With the data moved and a link to the new location, Docker should be able to run again.
-Restart your Docker system process.
+With that config change, you should be able to restart your Docker system process:
 
 ```
 $ systemctl --user start docker
 ```
 
-Confirm that Docker can run its `hello-world` example.
+Confirm that Docker is running and using your new data directory:
+
+```
+$ docker info | grep "Docker Root Dir"
+Docker Root Dir: /vol/cortex/nvme-infra/geffenlab/ben/docker-rootless
+```
+
+## run a container
+
+Confirm that Docker can run a container using the standard `hello-world` image.
 
 ```
 $ docker run --rm hello-world
@@ -245,67 +223,36 @@ This message shows that your installation appears to be working correctly.
 ... etc ...
 ```
 
-Docker should download its `hello-world` image and display a message like "Hello from Docker!".
+Docker should download the `hello-world` image and display a message like "Hello from Docker!".
 
-## Confirm the new Docker data location
-
-Finally, confirm that Docker is storing data in the new location:
-
-```
-$ docker info | grep "Docker Root Dir"
-Docker Root Dir: /vol/cortex/cd5/geffenlab/docker-data/ben/docker
-```
-
-This confirms that Docker found the link from the old location to the new location, and is now saving images and other data within `/vol/cortex/cd5/geffenlab/docker-data/ben/docker`.
-
-You should be able to list the image(s) in the new location:
+You should now be able to see the `hello-world` image, as saved in your data directory:
 
 ```
 $ docker images
-IMAGE                ID             DISK USAGE   CONTENT SIZE   EXTRA
-hello-world:latest   1b44b5a3e06a       10.1kB             0B        
+
+IMAGE                                                      ID             DISK USAGE   CONTENT SIZE   EXTRA
+hello-world:latest                                         1b44b5a3e06a       10.1kB             0B        
 ```
 
-At first `hello-world` might be the only image present.
+At this point we would not expect any other images to be stored in the new data directory.
+But next time you run a pipeline, Proced and Docker will download additional images to this directory, as needed.
 
-But now you should be ready to run pipelines again, and see those larger images saved outside of your home directory.
+# Clean up old Docker data directory config
 
-# Un-moving the Docker data directory
+Some of us (maybe just Ben and Anjali) have older config for cortex rootless docker.
+Once the above steps are working and Docker is functional on `/vol/cortex/nvme-infra`, we can delete the old config.
+This is just removing a symbolic link that we had created.
 
-Our Docker images may change over time, and so may the storage situation on cortex!
-In case you want to undo moving the Docker data directory, here are some comands:
-
-Undo the alternative data directory:
+Check if the link still exists:
 
 ```
-# clean up cached images to make the move faster
-$ docker system prune --all
+$ ls -alth ~/.local/share/docker
+```
 
-# stop Docker
-$ systemctl --user stop docker
+If you see a link here (looks like `source -> destination`) go ahead and remove it:
 
-# un-link to the alternative data directory
+```
 rm ~/.local/share/docker
-
-# move docker data back to home
-$ mv /vol/cortex/cd5/geffenlab/docker-data/ben/docker ~/.local/share/docker
-
-# restart docker
-$ systemctl --user start docker
 ```
 
-Verify docker works from default data directory within home:
-
-```
-# Confirm you can run containers
-$ docker run --rm hello-world
-
-# Confirm data directory
-$ docker info | grep "Docker Root Dir"
-```
-
-If all looks good, clean up the alternative data directory:
-
-```
-$ rm -rf /vol/cortex/cd5/geffenlab/docker-data/ben
-```
+As long as you don't add a trailing slash `/`, and you don't add the flags `-rf`, then this `rm` command will only remove the link, not the directory to which the link points.

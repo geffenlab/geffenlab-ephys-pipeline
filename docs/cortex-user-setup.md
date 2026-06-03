@@ -170,6 +170,9 @@ The process will go something like this:
  - As admins they will do the first part, adding your user to the system config files `/etc/subuid` and `/etc/subgid`.
  - When they are done, you can run `dockerd-rootless-setuptool.sh install --force` yourself.
 
+The instructions above enable rootless Docker itself.
+You must also [configure your Docker data directory](./docker-images.md#change-your-docker-data-directory)!
+
 ## cortex test Docker
 
 With rootless Docker all set up, verify you can run Docker containers.
@@ -247,13 +250,6 @@ docker run --rm --env DISPLAY --volume /tmp/.X11-unix:/tmp/.X11-unix ferri/xeyes
 Expect a graphical window to appear with a title like "xeyes".
 The window should contain two silly eyeballs that look at the mouse cursor and follow it as it moves.
 You can close the window by clicking the `x` any time.
-
-## cortex Docker image location (optional)
-
-Docker images can take up a lot of space and consume your cortex home directory quota.
-See [docker-images.md](./docker-images.md) for tips on managing Docker images and home directory usage.
-
-[docker-images.md#moving-the-docker-data-directory](./docker-images.md#moving-the-docker-data-directory) has instructions for moving Docker image storage out of your home directory, into `/vol/cortex/cd5/geffenlab`.  You can do this now or wait until quota becomes a problem.
 
 ## cortex Conda
 
