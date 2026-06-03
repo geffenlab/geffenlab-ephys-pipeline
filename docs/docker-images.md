@@ -156,7 +156,7 @@ Here's a concrete example for cortex user `ben`:
 To create your data directory:
 
 ```
-mkdir -p /vol/cortex/nvme-infra/geffenlab/ben/docker-rootless
+$ mkdir -p /vol/cortex/nvme-infra/geffenlab/ben/docker-rootless
 ```
 
 ## point your Docker at your data directory
@@ -167,27 +167,59 @@ Your Docker system process will look for a configuraiton file in your home direc
 Check whether this file already exists:
 
 ```
-cat ~/.config/docker/daemon.json
+$ cat ~/.config/docker/daemon.json
+
+{
+    "runtimes": {
+        "nvidia": {
+            "args": [],
+            "path": "nvidia-container-runtime"
+        }
+    }
+}
 ```
 
-If the file does exist, you should edit it.
-
-If the file does not exist yet, you can create it and add the necessary config like so:
-
-```
-mkdir -p ~/.config/docker/
-echo '{ "data-root": "/vol/cortex/nvme-infra/geffenlab/ben/docker-rootless" }'| tee ~/.config/docker/daemon.json
-```
-
-Don't forget to replace `ben` with your own cortex username.
-
-Double check this configuration file, after creating or editing it:
+This file might already exist, with other configuration in it.
+If so, you should edit it using your favorite editor:
 
 ```
-cat ~/.config/docker/daemon.json
+# text-based editor
+$ vim ~/.config/docker/daemon.json
+
+# graphical editor
+$ gedit ~/.config/docker/daemon.json
+```
+If the file does not exist yet, you can created it and add the necessary config.
+
+The config we want to add looks like this:
+
+```
+{ "data-root": "/vol/cortex/nvme-infra/geffenlab/ben/docker-rootless" }
+```
+
+If you're combining with existing config, the end result might look like this:
+
+```
+{
+    "runtimes": {
+        "nvidia": {
+            "args": [],
+            "path": "nvidia-container-runtime"
+        }
+    },
+    "data-root": "/vol/cortex/nvme-infra/geffenlab/ben/docker-rootless"
+}
+```
+
+When you're done creating or editing the file, you can check it again:
+
+```
+$ cat ~/.config/docker/daemon.json
 ```
 
 You should have one `"data-root":` property, pointing to your own data directory within `/vol/cortex/nvme-infra`.
+
+Don't forget to replace `ben` with your own cortex username!
 
 ## restart Docker
 
@@ -201,6 +233,7 @@ Confirm that Docker is running and using your new data directory:
 
 ```
 $ docker info | grep "Docker Root Dir"
+
 Docker Root Dir: /vol/cortex/nvme-infra/geffenlab/ben/docker-rootless
 ```
 
@@ -249,10 +282,10 @@ Check if the link still exists:
 $ ls -alth ~/.local/share/docker
 ```
 
-If you see a link here (looks like `source -> destination`) go ahead and remove it:
+If you see a link here (looks like `source -> destination`, for example `/home/ben/.local/share/docker -> /vol/cortex/cd5/geffenlab/docker-data/ben/docker`) go ahead and remove it:
 
 ```
-rm ~/.local/share/docker
+$ rm ~/.local/share/docker
 ```
 
 As long as you don't add a trailing slash `/`, and you don't add the flags `-rf`, then this `rm` command will only remove the link, not the directory to which the link points.
