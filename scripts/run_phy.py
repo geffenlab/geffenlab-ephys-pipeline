@@ -139,7 +139,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "--docker-image", "-I",
         type=str,
         help="Which Docker image to use for running Phy. (default: %(default)s)",
-        default="ghcr.io/geffenlab/geffenlab-phy-desktop:v0.0.5"
+        default="ghcr.io/geffenlab/geffenlab-phy-desktop:v0.0.6"
     )
     parser.add_argument(
         "--docker-run-args", "-D",

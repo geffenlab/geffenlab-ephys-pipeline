@@ -26,7 +26,7 @@ prototype:
 steps:
 
   - name: catgt
-    image: ghcr.io/geffenlab/geffenlab-spikeglx-tools:v0.0.19
+    image: ghcr.io/geffenlab/geffenlab-spikeglx-tools:v0.0.20
     command: [
       /opt/code/catgt.py,
       $raw_data_root/$experimenter/$subject/$date/ecephys/,
@@ -41,7 +41,7 @@ steps:
      - "catgt/**/*.txt"
 
   - name: kilosort4
-    image: ghcr.io/geffenlab/geffenlab-kilosort4:v0.0.3
+    image: ghcr.io/geffenlab/geffenlab-kilosort4:v0.0.4
     gpus: $gpus
     command: [
       --input-dir, "$processed_data_root/$experimenter/$subject/$date/catgt",
@@ -63,7 +63,7 @@ steps:
      - "kilosort4/**/spike_times.npy"
 
   - name: tprime
-    image: ghcr.io/geffenlab/geffenlab-spikeglx-tools:v0.0.19
+    image: ghcr.io/geffenlab/geffenlab-spikeglx-tools:v0.0.20
     command: [
       /opt/code/tprime.py,
       $processed_data_root/$experimenter/$subject/$date/catgt,
@@ -88,7 +88,7 @@ steps:
      - "tprime/**/*.npy"
 
   - name: bombcell
-    image: ghcr.io/geffenlab/geffenlab-bombcell:v0.0.6
+    image: ghcr.io/geffenlab/geffenlab-bombcell:v0.0.7
     # https://github.com/joblib/loky/blob/master/loky/backend/context.py#L88
     environment:
       LOKY_MAX_CPU_COUNT: "10"
@@ -112,7 +112,7 @@ steps:
      - "kilosort4/**/*.png"
 
   - name: summary
-    image: ghcr.io/geffenlab/geffenlab-data-summary:v0.0.3
+    image: ghcr.io/geffenlab/geffenlab-data-summary:v0.0.4
     command: [
       --raw-data-root, $raw_data_root,
       --processed-data-root, $processed_data_root,

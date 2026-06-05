@@ -33,7 +33,7 @@ If so it will prompt you to choose one of them by number.  For example:
 $ python run_phy.py --experimenter BH --subject AS20-minimal3 --date 03112025
 
 2026-05-13 11:06:43,337 [INFO] Writing logs for this script to stdout and /vol/cortex/cd5/geffenlab/processed_data/BH/AS20-minimal3/03112025/run_phy_20260513T150643UTC.log
-2026-05-13 11:06:43,337 [INFO] Using Docker image: ghcr.io/geffenlab/geffenlab-phy-desktop:v0.0.5
+2026-05-13 11:06:43,337 [INFO] Using Docker image: ghcr.io/geffenlab/geffenlab-phy-desktop:v0.0.6
 2026-05-13 11:06:43,337 [INFO] Using 'docker run' args: ['--rm']
 2026-05-13 11:06:43,337 [INFO] Using GPU device: 0
 2026-05-13 11:06:43,337 [INFO] Configuring X11 display: True
