@@ -12,7 +12,7 @@ args:
   experimenter: AD
   subject: AD025
   date: "03102026"
-  catgt_args: "-prb_fld -out_prb_fld -ap -ob -obx=0 -apfilter=butter,12,300,9000 -gblcar -gfix=0.40,0.10,0.02 -xd=1,0,13,6,500 -xa=1,0,0,0,0,0 -supercat_skip_ni_ob_bin"
+  catgt_args: "-prb_fld -out_prb_fld -ap -lf -ob -obx=0 -apfilter=butter,12,300,9000 -lffilter=butter,12,1,500 -gblcar -gfix=0.40,0.10,0.02 -xd=1,0,13,6,500 -xa=1,0,0,0,0,0 -supercat_skip_ni_ob_bin"
   tprime_to_sync_pattern: "*/*.imec0.ap.*.txt"
   tprime_events_sync_pattern: "*.obx.xd_13_6_500.txt"
   tprime_events_pattern: "*.obx.*.txt"
