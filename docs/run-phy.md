@@ -9,7 +9,7 @@ Before running this you'd need to process a dataset, see [run-proceed.md](./run-
 You can run Phy on cortex via remote desktop using our [run_phy.py](../scripts/run_phy.py) script.
 
 This script calls `docker run` to start a Docker container with Phy installed in it.
-It uses our [geffenlab-phy-desktop](https://github.com/benjamin-heasly/geffenlab-phy-desktop) Docker image.  The script will make the necessary `/vol/cortex/cd5/geffenlab/processed_data/` session subdirectory available within the container.
+It uses our [geffenlab-phy-desktop](https://github.com/geffenlab/geffenlab-phy-desktop) Docker image.  The script will make the necessary `/vol/cortex/cd5/geffenlab/processed_data/` session subdirectory available within the container.
 
 Run the commands below from a terminal on cortex (see [cortex-remote-desktop-connection](./cortex-user-setup.md#cortex-remote-desktop-connection)).
 
@@ -33,7 +33,7 @@ If so it will prompt you to choose one of them by number.  For example:
 $ python run_phy.py --experimenter BH --subject AS20-minimal3 --date 03112025
 
 2026-05-13 11:06:43,337 [INFO] Writing logs for this script to stdout and /vol/cortex/cd5/geffenlab/processed_data/BH/AS20-minimal3/03112025/run_phy_20260513T150643UTC.log
-2026-05-13 11:06:43,337 [INFO] Using Docker image: ghcr.io/benjamin-heasly/geffenlab-phy-desktop:v0.0.5
+2026-05-13 11:06:43,337 [INFO] Using Docker image: ghcr.io/geffenlab/geffenlab-phy-desktop:v0.0.5
 2026-05-13 11:06:43,337 [INFO] Using 'docker run' args: ['--rm']
 2026-05-13 11:06:43,337 [INFO] Using GPU device: 0
 2026-05-13 11:06:43,337 [INFO] Configuring X11 display: True

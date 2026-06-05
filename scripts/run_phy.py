@@ -7,7 +7,7 @@ It should support several usage scenarios lile:
  - running locally
 
 It retrieves Phy as a Docker image, in which Phy and its dependencies are installed.
-The default image is maintained here: https://github.com/benjamin-heasly/geffenlab-phy-desktop
+The default image is maintained here: https://github.com/geffenlab/geffenlab-phy-desktop
 
 It attempts to configure GPU access and X11 display access for the Docker container.
 
@@ -139,7 +139,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "--docker-image", "-I",
         type=str,
         help="Which Docker image to use for running Phy. (default: %(default)s)",
-        default="ghcr.io/benjamin-heasly/geffenlab-phy-desktop:v0.0.5"
+        default="ghcr.io/geffenlab/geffenlab-phy-desktop:v0.0.5"
     )
     parser.add_argument(
         "--docker-run-args", "-D",

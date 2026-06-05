@@ -27,7 +27,7 @@ prototype:
 steps:
 
   - name: catgt
-    image: ghcr.io/benjamin-heasly/geffenlab-spikeglx-tools:v0.0.19
+    image: ghcr.io/geffenlab/geffenlab-spikeglx-tools:v0.0.19
     command: [
       /opt/code/catgt.py,
       $raw_data_root/$experimenter/$subject/$date/ecephys/,
@@ -42,7 +42,7 @@ steps:
      - "catgt/**/*.txt"
 
   - name: kilosort4
-    image: ghcr.io/benjamin-heasly/geffenlab-kilosort4:v0.0.3
+    image: ghcr.io/geffenlab/geffenlab-kilosort4:v0.0.3
     # https://docs.pytorch.org/docs/2.12/notes/cuda.html#optimizing-memory-usage-with-pytorch-alloc-conf
     environment:
       PYTORCH_ALLOC_CONF: "expandable_segments:True"
@@ -67,7 +67,7 @@ steps:
      - "kilosort4/**/spike_times.npy"
 
   - name: tprime
-    image: ghcr.io/benjamin-heasly/geffenlab-spikeglx-tools:v0.0.19
+    image: ghcr.io/geffenlab/geffenlab-spikeglx-tools:v0.0.19
     command: [
       /opt/code/tprime.py,
       $processed_data_root/$experimenter/$subject/$date/catgt,
@@ -92,7 +92,7 @@ steps:
      - "tprime/**/*.npy"
 
   - name: signal-alignment
-    image: ghcr.io/benjamin-heasly/geffenlab-spikeglx-tools:v0.0.19
+    image: ghcr.io/geffenlab/geffenlab-spikeglx-tools:v0.0.19
     command: [
       /opt/code/signal_alignment.py,
       $raw_data_root/$experimenter/$subject/$date/ecephys/,
@@ -114,7 +114,7 @@ steps:
      - "signal-alignment/**/*.npy"
 
   - name: bombcell
-    image: ghcr.io/benjamin-heasly/geffenlab-bombcell:v0.0.6
+    image: ghcr.io/geffenlab/geffenlab-bombcell:v0.0.6
     # https://github.com/joblib/loky/blob/master/loky/backend/context.py#L88
     environment:
       LOKY_MAX_CPU_COUNT: "10"

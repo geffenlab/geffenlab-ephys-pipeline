@@ -1,14 +1,14 @@
 # geffenlab-ephys-pipeline
 
-This repository contains [Proceed](https://benjamin-heasly.github.io/proceed/) [pipelines](./proceed/) and Python [scripts](./scripts/) for processing Geffen lab ephys data.
+This repository contains [Proceed](https://geffenlab.github.io/proceed/) [pipelines](./proceed/) and Python [scripts](./scripts/) for processing Geffen lab ephys data.
 
 This repository goes with several other repositories that define inividual processing steps and Docker images:
 
- - [geffenlab-spikeglx-tools](https://github.com/benjamin-heasly/geffenlab-spikeglx-tools): CatGT, TPrime, Python scripts
- - [geffenlab-kilosort4](https://github.com/benjamin-heasly/geffenlab-kilosort4): Kilosort4, NVIDIA and CUDA dependencies, ProbeInterface
- - [geffenlab-bombcell](https://github.com/benjamin-heasly/geffenlab-bombcell): Bombcell
- - [geffenlab-phy-desktop](https://github.com/benjamin-heasly/geffenlab-phy-desktop): interactive Phy environment
- - [geffenlab-data-summary](https://github.com/benjamin-heasly/geffenlab-data-summary): population analysis data summary and plots
+ - [geffenlab-spikeglx-tools](https://github.com/geffenlab/geffenlab-spikeglx-tools): CatGT, TPrime, Python scripts
+ - [geffenlab-kilosort4](https://github.com/geffenlab/geffenlab-kilosort4): Kilosort4, NVIDIA and CUDA dependencies, ProbeInterface
+ - [geffenlab-bombcell](https://github.com/geffenlab/geffenlab-bombcell): Bombcell
+ - [geffenlab-phy-desktop](https://github.com/geffenlab/geffenlab-phy-desktop): interactive Phy environment
+ - [geffenlab-data-summary](https://github.com/geffenlab/geffenlab-data-summary): population analysis data summary and plots
 
 # Getting started
 

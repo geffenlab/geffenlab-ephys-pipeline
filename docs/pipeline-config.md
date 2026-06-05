@@ -79,7 +79,7 @@ Kilosort 4 has [many settings](https://github.com/MouseLand/Kilosort/blob/9f8e70
 In principle we could encode these as part of the pipeline YAML, possibly using `args:` for flexibility.
 However, given the number of available settings, this seems cumbersome.
 
-Instead our [kilosort4](https://github.com/benjamin-heasly/geffenlab-kilosort4) step allows reading Kilosort 4 settings from a JSON file.
+Instead our [kilosort4](https://github.com/geffenlab/geffenlab-kilosort4) step allows reading Kilosort 4 settings from a JSON file.
 
 As configured in [as-nidq.yaml](../proceed/as-nidq.yaml), the step will look in the session's `raw_data` directory for any JSON files with names that end with `-kilosort4-settings.json`.
 As the step looks for potential probes to sort, like `imec0` or `imec1`, it will choose a JSON file that contains the probe name, for example `my-imec0-kilosort4-settings.json`.
@@ -108,7 +108,7 @@ It's a single JSON object of many `"name": value` pairs.
 This repo has an example at [my-imec0-kilosort4-settings.json](./my-imec0-kilosort4-settings.json).
 
 We can also get examples from previous pipeline runs.
-When our [kilosort4](https://github.com/benjamin-heasly/geffenlab-kilosort4) step runs, it writes out a JSON file of effective settings that were used, in the expected format.  Even when the default, baked-in settings are used the effective settings file will be complete and explicit.
+When our [kilosort4](https://github.com/geffenlab/geffenlab-kilosort4) step runs, it writes out a JSON file of effective settings that were used, in the expected format.  Even when the default, baked-in settings are used the effective settings file will be complete and explicit.
 
 For example, the pipeline run above with `experimenter=BH subject=AS20-minimal3 date="03112025"` would have produced an effective settings file within our `processed_data` directory:
 
@@ -134,7 +134,7 @@ Bombcell also has [many parameters](https://github.com/Julie-Fabre/bombcell/blob
 Again, in principle we could encode these as part of the pipeline YAML and use `args:` for flexibility.
 And again, given the number of available parameters, this seems cumbersome.
 
-Instead our [bombcell](https://github.com/benjamin-heasly/geffenlab-bombcell) step allows reading Bombcell parameters from a JSON file.
+Instead our [bombcell](https://github.com/geffenlab/geffenlab-bombcell) step allows reading Bombcell parameters from a JSON file.
 
 As configured in [as-nidq.yaml](../proceed/as-nidq.yaml), the step will look in the session's `raw_data` directory for any JSON files with names that end with `-bombcell-parameters.json`.
 As the step looks for potential probes to curate, like `imec0` or `imec1`, it will choose a JSON file that contains the probe name, for example `my-imec0-bombcell-parameters.json`.
@@ -163,7 +163,7 @@ It's a single JSON object of many `"name": value` pairs.
 This repo has an example at [my-imec0-bombcell-parameters.json](./my-imec0-bombcell-parameters.json).
 
 We can also get examples from previous pipeline runs.
-When our [bombcell](https://github.com/benjamin-heasly/geffenlab-bombcell) step runs, it writes out a JSON file of effective parameters that were used, in the expected format.  Even when the default, baked-in settings are used the file of effective parameters will be complete and explicit.
+When our [bombcell](https://github.com/geffenlab/geffenlab-bombcell) step runs, it writes out a JSON file of effective parameters that were used, in the expected format.  Even when the default, baked-in settings are used the file of effective parameters will be complete and explicit.
 
 For example, the pipeline run above with `experimenter=BH subject=AS20-minimal3 date="03112025"` would have produced an effective parameters file within our `processed_data` directory:
 

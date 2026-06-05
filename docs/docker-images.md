@@ -12,11 +12,11 @@ You can see which images are already installed by running `docker images`.  Here
 $ docker images
 
 IMAGE                                                      ID             DISK USAGE   CONTENT SIZE   EXTRA
-ghcr.io/benjamin-heasly/geffenlab-bombcell:v0.0.6          9f3b4dc71b37       3.08GB             0B        
-ghcr.io/benjamin-heasly/geffenlab-kilosort4:v0.0.3         9a37f2e60c08       10.9GB             0B        
-ghcr.io/benjamin-heasly/geffenlab-phy-desktop:v0.0.5       7c679a9d42d6       5.14GB             0B        
-ghcr.io/benjamin-heasly/geffenlab-spikeglx-tools:v0.0.16   c84d82023a9a       2.69GB             0B        
-ghcr.io/benjamin-heasly/geffenlab-spikeglx-tools:v0.0.17   f6060f4cd4c9       2.69GB             0B        
+ghcr.io/geffenlab/geffenlab-bombcell:v0.0.6          9f3b4dc71b37       3.08GB             0B        
+ghcr.io/geffenlab/geffenlab-kilosort4:v0.0.3         9a37f2e60c08       10.9GB             0B        
+ghcr.io/geffenlab/geffenlab-phy-desktop:v0.0.5       7c679a9d42d6       5.14GB             0B        
+ghcr.io/geffenlab/geffenlab-spikeglx-tools:v0.0.16   c84d82023a9a       2.69GB             0B        
+ghcr.io/geffenlab/geffenlab-spikeglx-tools:v0.0.17   f6060f4cd4c9       2.69GB             0B        
 hello-world:latest                                         1b44b5a3e06a       10.1kB             0B        
 ```
 
@@ -36,8 +36,8 @@ The listing above shows two versions of the same `geffenlab-spikeglx-tools` imag
 
 ```
 IMAGE                                                      ID             DISK USAGE   CONTENT SIZE   EXTRA
-ghcr.io/benjamin-heasly/geffenlab-spikeglx-tools:v0.0.16   c84d82023a9a       2.69GB             0B        
-ghcr.io/benjamin-heasly/geffenlab-spikeglx-tools:v0.0.17   f6060f4cd4c9       2.69GB             0B        
+ghcr.io/geffenlab/geffenlab-spikeglx-tools:v0.0.16   c84d82023a9a       2.69GB             0B        
+ghcr.io/geffenlab/geffenlab-spikeglx-tools:v0.0.17   f6060f4cd4c9       2.69GB             0B        
 ```
 
 The older version, `v0.0.16`, is stale.  We can remove the image using its `ID` value from the listing, via `docker rmi`:
@@ -45,8 +45,8 @@ The older version, `v0.0.16`, is stale.  We can remove the image using its `ID` 
 ```
 $ docker rmi c84d82023a9a
 
-Untagged: ghcr.io/benjamin-heasly/geffenlab-spikeglx-tools:v0.0.16
-Untagged: ghcr.io/benjamin-heasly/geffenlab-spikeglx-tools@sha256:b322b9e36244fb05a34c7cba44d89e191368bf1ae224771af24af34ace4f8404
+Untagged: ghcr.io/geffenlab/geffenlab-spikeglx-tools:v0.0.16
+Untagged: ghcr.io/geffenlab/geffenlab-spikeglx-tools@sha256:b322b9e36244fb05a34c7cba44d89e191368bf1ae224771af24af34ace4f8404
 Deleted: sha256:c84d82023a9a328877c9588d5f163623476327ea8e18dcd27f01a6c89bf762c1
 Deleted: sha256:c6d6e6d3cb079806a7a39436d4040359ed3c275b6e8bf9f2dd0d754815264d35
 Deleted: sha256:8118f2b754c0d94f330e31759c45412fa039db8fbf78dbcd8df5258b6324dfd5
