@@ -316,12 +316,12 @@ You don't need to run the steps below yourself, but we do want the lab to have t
 
 ## data directories
 
-The Geffen lab is assigned the following storage directory on cortex: `/vol/cortex/cd5/geffenlab/`.
+The Geffen lab is assigned the following storage directory on cortex: `/cdz/geffenlab/`.
 
 We created several subdirectories to organized things:
- - `/vol/cortex/cd5/geffenlab/raw_data`: raw nerual and behavioral data uploaded from lab machines
- - `/vol/cortex/cd5/geffenlab/processed_data`: intermediate pipeline outputs
- - `/vol/cortex/cd5/geffenlab/analysis`: final pipeline outputs to be downloaded for further analysis
+ - `/cdz/geffenlab/raw_data`: raw nerual and behavioral data uploaded from lab machines
+ - `/cdz/geffenlab/processed_data`: intermediate pipeline outputs
+ - `/cdz/geffenlab/analysis`: final pipeline outputs to be downloaded for further analysis
 
 ## AWS account setup
 
@@ -356,6 +356,6 @@ $ aws sts get-caller-identity
 ```
 
 We copied the access key to a location on cortex where users in the `geffenlab` group can access it:
- - `cp -r ~/.aws/ /vol/cortex/cd5/geffenlab/`
- - `chmod g+r /vol/cortex/cd5/geffenlab/.aws/credentials`
- - `chmod g+r /vol/cortex/cd5/geffenlab/.aws/config`
+ - `cp -r ~/.aws/ /cdz/geffenlab/`
+ - `chmod g+r /cdz/geffenlab/.aws/credentials`
+ - `chmod g+r /cdz/geffenlab/.aws/config`

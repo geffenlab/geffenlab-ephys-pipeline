@@ -12,8 +12,8 @@ Run the commands below from a terminal on cortex (see [cortex-remote-desktop-con
 First, remove outputs from any previous test runs.
 
 ```
-rm -rf /vol/cortex/cd5/geffenlab/processed_data/BH/AS20-demo/03112025/
-rm -rf /vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/
+rm -rf /cdz/geffenlab/processed_data/BH/AS20-demo/03112025/
+rm -rf /cdz/geffenlab/analysis/BH/AS20-demo/03112025/
 ```
 
 The small, `AS20-demo` dataset came from a SpikeGLX-plus-NIDQ rig.
@@ -35,7 +35,7 @@ For the samll dataset, processing should take about 5-10 minutes to complete.
 
 ## raw data inputs
 
-The pipeline will look for raw data within a subfolder of `/vol/cortex/cd5/geffenlab/raw_data`.  It will expect data to use a standard directory structure based on experimenter, subject and date -- as in [upload-data.md](./upload-data.md).
+The pipeline will look for raw data within a subfolder of `/cdz/geffenlab/raw_data`.  It will expect data to use a standard directory structure based on experimenter, subject and date -- as in [upload-data.md](./upload-data.md).
 
 ![Ubuntu Files view of a raw_data/ subdirectory containing behavioral and neural data](./cortex-data.png)
 
@@ -48,11 +48,11 @@ It will also save the same logging information, and more, in a `proceed_out` sub
 
 ## processed data and analysis outputs
 
-The pipeline writes intermediate processing results into a subdirectory of `/vol/cortex/cd5/geffenlab/processed_data`, with results organized by experimenter, subject, date, step name, SpikeGLX run, and probe.
+The pipeline writes intermediate processing results into a subdirectory of `/cdz/geffenlab/processed_data`, with results organized by experimenter, subject, date, step name, SpikeGLX run, and probe.
 
 ![Ubuntu Files view of a processed_data/ subdirectory containing intermediate processing results](./processed_data.png)
 
-It also writes final, summarized results into a subdirectory of `/vol/cortex/cd5/geffenlab/analysis`, with results organized by experimenter, subject, date, SpikeGLX run, and probe.
+It also writes final, summarized results into a subdirectory of `/cdz/geffenlab/analysis`, with results organized by experimenter, subject, date, SpikeGLX run, and probe.
 
 ![Ubuntu Files view of an analysis/ subdirectory containing final, summarized processing results](./analysis.png)
 
@@ -207,8 +207,8 @@ At the most extreme, you can delete old processing results and run everything fr
 For example with experimenter `BH`, subject `AS20-demo`, and date `03112025`, you could remove all pipeline outputs like this:
 
 ```
-rm -rf /vol/cortex/cd5/geffenlab/processed_data/BH/AS20-demo/03112025/
-rm -rf /vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/
+rm -rf /cdz/geffenlab/processed_data/BH/AS20-demo/03112025/
+rm -rf /cdz/geffenlab/analysis/BH/AS20-demo/03112025/
 ```
 
 Use caution when deleting files!

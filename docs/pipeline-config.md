@@ -34,8 +34,8 @@ Taking [as-nidq.yaml](../proceed/as-nidq.yaml) as an example, the pipeline has a
 args:
   user: "0:0"
   gpus: [3]
-  raw_data_root: /vol/cortex/cd5/geffenlab/raw_data
-  processed_data_root: /vol/cortex/cd5/geffenlab/processed_data
+  raw_data_root: /cdz/geffenlab/raw_data
+  processed_data_root: /cdz/geffenlab/processed_data
   experimenter: AS
   subject: AS20
   date: "03112025"
@@ -88,7 +88,7 @@ Settings in this file will be loaded from JSON and used to override the Kilosort
 A working file layout with Kilosort 4 settings for two probes might look like this:
 
 ```
-/vol/cortex/cd5/geffenlab/
+/cdz/geffenlab/
 └── raw_data/
     └── BH/
         └── AS20-minimal3/
@@ -113,7 +113,7 @@ When our [kilosort4](https://github.com/geffenlab/geffenlab-kilosort4) step runs
 For example, the pipeline run above with `experimenter=BH subject=AS20-minimal3 date="03112025"` would have produced an effective settings file within our `processed_data` directory:
 
 ```
-/vol/cortex/cd5/geffenlab/processed_data/
+/cdz/geffenlab/processed_data/
 └── BH/
     └── AS20-minimal3/
         └── 03112025/
@@ -143,7 +143,7 @@ Settings in this file will be loaded from JSON and used to override the Bombcell
 A working file layout with Bombcell parameters for two probes might look like this:
 
 ```
-/vol/cortex/cd5/geffenlab/
+/cdz/geffenlab/
 └── raw_data/
     └── BH/
         └── AS20-minimal3/
@@ -168,7 +168,7 @@ When our [bombcell](https://github.com/geffenlab/geffenlab-bombcell) step runs, 
 For example, the pipeline run above with `experimenter=BH subject=AS20-minimal3 date="03112025"` would have produced an effective parameters file within our `processed_data` directory:
 
 ```
-/vol/cortex/cd5/geffenlab/processed_data/
+/cdz/geffenlab/processed_data/
 └── BH/
     └── AS20-minimal3/
         └── 03112025/

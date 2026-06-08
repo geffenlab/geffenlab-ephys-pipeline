@@ -40,7 +40,7 @@ $ python ~/geffenlab-ephys-pipeline/scripts/upload_data.py
 2026-05-12 13:48:03,812 [INFO] Using SpikeGLX matching pattern(s): ['<SUBJECT>/**/*_<MM><DD><YYYY>_*.nidq.meta', '<SUBJECT>/**/*_<MM><DD><YYYY>_*.obx.bin', '<SUBJECT>/**/*_<YY><MM><DD>_*.nidq.meta', '<SUBJECT>/**/*_<YY><MM><DD>_*.obx.bin']
 2026-05-12 13:48:03,812 [INFO] Using Open Ephys .oebin matching pattern: <SUBJECT>/**/<YYYY>-<MM>-<DD>_*/*/*/*/structure.oebin
 2026-05-12 13:48:03,812 [INFO] Uploading files to remote host: 128.91.19.199
-2026-05-12 13:48:03,812 [INFO] Uploading files to remote raw data root: /vol/cortex/cd5/geffenlab/raw_data
+2026-05-12 13:48:03,812 [INFO] Uploading files to remote raw data root: /cdz/geffenlab/raw_data
 Experimenter initials: BH
 2026-05-12 13:48:05,943 [INFO] Uploading files for experimenter: BH
 Subject ID: AS20-demo
@@ -93,7 +93,7 @@ From all the files found, the script can use the optional qualifier to further r
 Before uploading, the script will show which files it plans to create on cortex and prompt for your confirmation.
 
 ```
-2026-05-12 13:48:17,353 [INFO] Planning to create 6 files in remote dir /vol/cortex/cd5/geffenlab/raw_data:
+2026-05-12 13:48:17,353 [INFO] Planning to create 6 files in remote dir /cdz/geffenlab/raw_data:
 2026-05-12 13:48:17,353 [INFO]   BH/AS20-demo/03112025/behavior/AS20_031125_trainingSingle6Tone2024_0_39.txt
 2026-05-12 13:48:17,353 [INFO]   BH/AS20-demo/03112025/behavior/AS20_031125_trainingSingle6Tone2024_0_39.mat
 2026-05-12 13:48:17,353 [INFO]   BH/AS20-demo/03112025/ecephys/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.nidq.bin
@@ -112,7 +112,7 @@ Password for remote user ben:
 2026-05-12 13:48:52,096 [INFO] Connecting to remote host: 128.91.19.199.
 2026-05-12 13:49:02,065 [INFO] Connected (version 2.0, client OpenSSH_8.9p1)
 2026-05-12 13:49:02,261 [INFO] Authentication (password) successful!
-2026-05-12 13:49:02,261 [INFO] Uploading to /vol/cortex/cd5/geffenlab/raw_data:
+2026-05-12 13:49:02,261 [INFO] Uploading to /cdz/geffenlab/raw_data:
 2026-05-12 13:49:02,261 [INFO]   BH/AS20-demo/03112025/behavior/AS20_031125_trainingSingle6Tone2024_0_39.txt
 2026-05-12 13:49:09,998 [INFO] [chan 1] Opened sftp connection (server version 3)
 2026-05-12 13:49:10,018 [INFO]   BH/AS20-demo/03112025/behavior/AS20_031125_trainingSingle6Tone2024_0_39.mat
@@ -120,7 +120,7 @@ Password for remote user ben:
 2026-05-12 13:49:30,260 [INFO]   BH/AS20-demo/03112025/ecephys/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.nidq.meta
 2026-05-12 13:49:30,332 [INFO]   BH/AS20-demo/03112025/ecephys/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.imec0.ap.bin
 2026-05-12 13:49:52,320 [INFO]   BH/AS20-demo/03112025/ecephys/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.imec0.ap.meta
-2026-05-12 13:49:52,402 [INFO] Setting 'group' and 'other' permissions for session dir /vol/cortex/cd5/geffenlab/raw_data/BH/AS20-demo/03112025:
+2026-05-12 13:49:52,402 [INFO] Setting 'group' and 'other' permissions for session dir /cdz/geffenlab/raw_data/BH/AS20-demo/03112025:
 2026-05-12 13:49:52,472 [INFO] [chan 1] sftp session closed.
 2026-05-12 13:49:52,472 [INFO] OK.
 ```

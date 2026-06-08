@@ -15,9 +15,9 @@ version: 0.0.11
 args:
   user: "0:0"
   gpus: [3]
-  raw_data_root: /vol/cortex/cd5/geffenlab/raw_data
-  processed_data_root: /vol/cortex/cd5/geffenlab/processed_data
-  analysis_root: /vol/cortex/cd5/geffenlab/analysis
+  raw_data_root: /cdz/geffenlab/raw_data
+  processed_data_root: /cdz/geffenlab/processed_data
+  analysis_root: /cdz/geffenlab/analysis
   experimenter: AS
   subject: AS20
   date: "03112025"

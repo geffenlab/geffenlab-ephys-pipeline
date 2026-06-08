@@ -305,7 +305,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "--raw-data-root", "-R",
         type=str,
         help="Remote root directory containing lab raw data. (default: %(default)s)",
-        default="/vol/cortex/cd5/geffenlab/raw_data/"
+        default="/cdz/geffenlab/raw_data/"
     )
     parser.add_argument(
         "--experimenter", "-e",

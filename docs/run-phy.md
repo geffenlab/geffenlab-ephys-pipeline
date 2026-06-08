@@ -9,7 +9,7 @@ Before running this you'd need to process a dataset, see [run-proceed.md](./run-
 You can run Phy on cortex via remote desktop using our [run_phy.py](../scripts/run_phy.py) script.
 
 This script calls `docker run` to start a Docker container with Phy installed in it.
-It uses our [geffenlab-phy-desktop](https://github.com/geffenlab/geffenlab-phy-desktop) Docker image.  The script will make the necessary `/vol/cortex/cd5/geffenlab/processed_data/` session subdirectory available within the container.
+It uses our [geffenlab-phy-desktop](https://github.com/geffenlab/geffenlab-phy-desktop) Docker image.  The script will make the necessary `/cdz/geffenlab/processed_data/` session subdirectory available within the container.
 
 Run the commands below from a terminal on cortex (see [cortex-remote-desktop-connection](./cortex-user-setup.md#cortex-remote-desktop-connection)).
 
@@ -24,7 +24,7 @@ python run_phy.py --experimenter BH --subject AS20-demo --date 03112025
 
 ## selecting a Phy subdirectory
 
-The script will search within `/vol/cortex/cd5/geffenlab/processed_data/`, for Phy `params.py` files, for the specified session.
+The script will search within `/cdz/geffenlab/processed_data/`, for Phy `params.py` files, for the specified session.
 It might find multiple `params.py`, as from multiple sessions on the same date or multiple probes for a given session.
 
 If so it will prompt you to choose one of them by number.  For example:
@@ -32,20 +32,20 @@ If so it will prompt you to choose one of them by number.  For example:
 ```
 $ python run_phy.py --experimenter BH --subject AS20-minimal3 --date 03112025
 
-2026-05-13 11:06:43,337 [INFO] Writing logs for this script to stdout and /vol/cortex/cd5/geffenlab/processed_data/BH/AS20-minimal3/03112025/run_phy_20260513T150643UTC.log
+2026-05-13 11:06:43,337 [INFO] Writing logs for this script to stdout and /cdz/geffenlab/processed_data/BH/AS20-minimal3/03112025/run_phy_20260513T150643UTC.log
 2026-05-13 11:06:43,337 [INFO] Using Docker image: ghcr.io/geffenlab/geffenlab-phy-desktop:v0.0.6
 2026-05-13 11:06:43,337 [INFO] Using 'docker run' args: ['--rm']
 2026-05-13 11:06:43,337 [INFO] Using GPU device: 0
 2026-05-13 11:06:43,337 [INFO] Configuring X11 display: True
 2026-05-13 11:06:43,337 [INFO] Running container as user and group: None
-2026-05-13 11:06:43,337 [INFO] Looking for phy/ data in: /vol/cortex/cd5/geffenlab/processed_data/BH/AS20-minimal3/03112025
+2026-05-13 11:06:43,337 [INFO] Looking for phy/ data in: /cdz/geffenlab/processed_data/BH/AS20-minimal3/03112025
 2026-05-13 11:06:43,338 [INFO] Looking for params.py files(s) matchign pattern: **/params.py
-2026-05-13 11:06:43,339 [INFO] Found 2 params.py matches within /vol/cortex/cd5/geffenlab/processed_data/BH/AS20-minimal3/03112025
+2026-05-13 11:06:43,339 [INFO] Found 2 params.py matches within /cdz/geffenlab/processed_data/BH/AS20-minimal3/03112025
 2026-05-13 11:06:43,339 [INFO] Please choose one:
 2026-05-13 11:06:43,339 [INFO]   0: kilosort4/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/params.py
 2026-05-13 11:06:43,339 [INFO]   1: kilosort4/catgt_another_session_test_g0/another_session_test_g0_imec0/params.py
 Choose by number 0-1: 1
-2026-05-13 11:07:07,101 [INFO] Using params.py: /vol/cortex/cd5/geffenlab/processed_data/BH/AS20-minimal3/03112025/kilosort4/catgt_another_session_test_g0/another_session_test_g0_imec0/params.py
+2026-05-13 11:07:07,101 [INFO] Using params.py: /cdz/geffenlab/processed_data/BH/AS20-minimal3/03112025/kilosort4/catgt_another_session_test_g0/another_session_test_g0_imec0/params.py
 2026-05-13 11:07:07,101 [INFO] Starting Phy run.
 ```
 

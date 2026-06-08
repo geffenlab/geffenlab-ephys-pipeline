@@ -7,8 +7,8 @@ version: 0.0.11
 args:
   user: "0:0"
   gpus: [3]
-  raw_data_root: /vol/cortex/cd5/geffenlab/raw_data
-  processed_data_root: /vol/cortex/cd5/geffenlab/processed_data
+  raw_data_root: /cdz/geffenlab/raw_data
+  processed_data_root: /cdz/geffenlab/processed_data
   experimenter: AD
   subject: AD025
   date: "03102026"

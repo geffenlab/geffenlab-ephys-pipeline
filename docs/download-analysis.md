@@ -6,7 +6,7 @@ First you'll need to do initial [cortex user setup](./cortex-user-setup.md) and 
 
 # Download analysis results from cortex
 
-Our [download_analysis.py](../scripts/download_analysis.py) script will search on cortex within `/vol/cortex/cd5/geffenlab/analysis` for a session that you specify.  It will download the session's `analysis/` subdirectory to your local machine.
+Our [download_analysis.py](../scripts/download_analysis.py) script will search on cortex within `/cdz/geffenlab/analysis` for a session that you specify.  It will download the session's `analysis/` subdirectory to your local machine.
 
 Internally this uses `ssh` to connect to cortex using your own user credentials.
 
@@ -28,7 +28,7 @@ This will prompt you for the experimenter initials, subject id, and session date
 ```
 2026-05-14 12:00:32,024 [INFO] Downloading files to local root: /mnt/c/Users/labuser/Desktop/pipeline-results
 2026-05-14 12:00:32,024 [INFO] Downloading files from remote host: 128.91.19.199
-2026-05-14 12:00:32,024 [INFO] Downloading files from remote analysis root: /vol/cortex/cd5/geffenlab/analysis
+2026-05-14 12:00:32,024 [INFO] Downloading files from remote analysis root: /cdz/geffenlab/analysis
 Experimenter initials: BH
 2026-05-14 12:00:34,018 [INFO] Downloading files for experimenter: BH
 Subject ID: AS20-demo
@@ -46,33 +46,33 @@ Password for remote user ben:
 It will summarize what it finds in the session's `analysis/` subdirectory on cortex, and download all of these files:
 
 ```
-2026-05-14 12:01:03,186 [INFO] Checking for remote analysis session directory /vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025:
+2026-05-14 12:01:03,186 [INFO] Checking for remote analysis session directory /cdz/geffenlab/analysis/BH/AS20-demo/03112025:
 catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0
 summary
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/neuronal_plus_behavioral.pkl
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_2.png
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_5.png
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_12.png
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_1.png
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_11.png
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_13.png
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_8.png
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_10.png
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_3.png
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_14.png
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_7.png
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_9.png
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_4.png
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_6.png
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_15.png
-/vol/cortex/cd5/geffenlab/analysis/BH/AS20-demo/03112025/summary/progress.txt.done
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/neuronal_plus_behavioral.pkl
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_2.png
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_5.png
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_12.png
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_1.png
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_11.png
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_13.png
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_8.png
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_10.png
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_3.png
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_14.png
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_7.png
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_9.png
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_4.png
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_6.png
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/multiplot/AS20-demo-03112025_neurons_15.png
+/cdz/geffenlab/analysis/BH/AS20-demo/03112025/summary/progress.txt.done
 2026-05-14 12:01:09,905 [INFO] Downloading files to: /mnt/c/Users/labuser/Desktop/pipeline-results
 2026-05-14 12:01:09,946 [INFO] [chan 2] Opened sftp connection (server version 3)
 2026-05-14 12:01:11,677 [INFO] [chan 2] sftp session closed.
 2026-05-14 12:01:11,678 [INFO] OK.
 ```
 
-The files on cortex would be in a subfolder of `/vol/cortex/cd5/geffenlab/analysis`, for the session you specified.  For example, this demo session has a data [Pickle](https://docs.python.org/3/library/pickle.html) and a folder of summary plots.
+The files on cortex would be in a subfolder of `/cdz/geffenlab/analysis`, for the session you specified.  For example, this demo session has a data [Pickle](https://docs.python.org/3/library/pickle.html) and a folder of summary plots.
 
 ![Ubuntu Files view of a session analysis/ subdirectory containing behavioral and neural data](./cortex-analysis.png)
 
