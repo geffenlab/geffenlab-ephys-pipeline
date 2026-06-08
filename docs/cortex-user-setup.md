@@ -282,17 +282,31 @@ conda --version
 
 ## cortex Conda environment
 
-With conda installed we can create our own environment with Python and Proceed.
+With conda installed we can create our environment with Python and Proceed.
 The environment is defined here in this repo in [geffen-pipelines.yml](../geffen-pipelines.yml).
 It's the same environment we used above, for your local lab machine.
-To create and activate the environment on cortex:
+
+Please note: on cortex we want to store our Conda environment data within `/vol/cortex/nvme-envs/geffenlab`, and not within the lab data directory `/cdz/geffenlab`.  Please see [nvme-envs-policy.md](https://pesaranlab.slack.com/files/U08UK1MFZ7Y/F0B9R1R6AC8/nvme-envs-policy.md) on the `brainsadmin` Slack for details.
+
+Here's how to create and activate our environment on cortex:
 
 ```
+# Remove any stale environment (It's OK for this to fail, if no environment exists yet).
+conda env remove -n geffen-pipelines
+
+# Create your environment storage directory including your username ($USER becomes your username).
+mkdir -p /vol/cortex/nvme-envs/geffenlab/$USER
+
+# Tell Conda about your storage directory
+conda config --append envs_dirs /vol/cortex/nvme-envs/geffenlab/$USER
+
+# Get this repo, which contains the environment definition.
 cd ~
 git clone https://github.com/geffenlab/geffenlab-ephys-pipeline.git
 
+# Create the environment within your environment storage directory 
 cd ~/geffenlab-ephys-pipeline
-conda env create -f geffen-pipelines.yml
+conda env create -f geffen-pipelines.yml -p /vol/cortex/nvme-envs/geffenlab/$USER/geffen-pipelines
 ```
 
 As above, verify expected Python and Proceed versions.
