@@ -295,10 +295,7 @@ Here's how to create and activate our environment on cortex:
 conda env remove -n geffen-pipelines
 
 # Create your Conda environment storage directory including your username ($USER becomes your username).
-mkdir -p /vol/cortex/nvme-envs/geffenlab/$USER
-
-# Tell Conda about your environment directory.
-conda config --append envs_dirs /vol/cortex/nvme-envs/geffenlab/$USER
+mkdir -p /vol/cortex/nvme-envs/geffenlab/$USER/envs
 
 # Get this repo, which contains our environment definition.
 cd ~
