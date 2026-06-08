@@ -294,19 +294,22 @@ Here's how to create and activate our environment on cortex:
 # Remove any stale environment (It's OK for this to fail, if no environment exists yet).
 conda env remove -n geffen-pipelines
 
-# Create your environment storage directory including your username ($USER becomes your username).
+# Create your Conda environment storage directory including your username ($USER becomes your username).
 mkdir -p /vol/cortex/nvme-envs/geffenlab/$USER
 
-# Tell Conda about your storage directory
+# Tell Conda about your environment directory.
 conda config --append envs_dirs /vol/cortex/nvme-envs/geffenlab/$USER
 
-# Get this repo, which contains the environment definition.
+# Get this repo, which contains our environment definition.
 cd ~
 git clone https://github.com/geffenlab/geffenlab-ephys-pipeline.git
 
-# Create the environment within your environment storage directory 
+# Create the environment.
 cd ~/geffenlab-ephys-pipeline
-conda env create -f geffen-pipelines.yml -p /vol/cortex/nvme-envs/geffenlab/$USER/geffen-pipelines
+conda env create -f geffen-pipelines.yml
+
+# Confirm the environment is created and has its path within /vol/cortex/nvme-envs/geffenlab/
+conda env list
 ```
 
 As above, verify expected Python and Proceed versions.
