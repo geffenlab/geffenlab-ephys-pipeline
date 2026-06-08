@@ -103,7 +103,7 @@ steps:
      - "tprime/**/*.npy"
 
   - name: bombcell
-    image: ghcr.io/geffenlab/geffenlab-bombcell:v0.0.7
+    image: ghcr.io/geffenlab/geffenlab-bombcell:v0.0.8
     # https://github.com/joblib/loky/blob/master/loky/backend/context.py#L88
     environment:
       LOKY_MAX_CPU_COUNT: "10"
