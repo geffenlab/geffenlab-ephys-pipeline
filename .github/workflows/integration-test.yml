@@ -39,6 +39,7 @@ jobs:
         mkdir -p raw_data/CI
         mkdir -p processed_data/
         mkdir -p analysis/
+        mkdir -p scratch/
 
         cd raw_data/CI/
         wget https://storage.googleapis.com/tripledip-geffenlab/AS20-minimal3.zip
@@ -49,7 +50,7 @@ jobs:
     - name: Proceed pipeline
       shell: bash -el {0}
       run: |
-        proceed run proceed/ci-nidq.yaml --args raw_data_root=$PWD/raw_data processed_data_root=$PWD/processed_data analysis_root=$PWD/analysis
+        proceed run proceed/ci-nidq.yaml --args raw_data_root=$PWD/raw_data processed_data_root=$PWD/processed_data analysis_root=$PWD/analysis scratch_root=$PWD/scratch
 
     - name: Upload Results
       uses: actions/upload-artifact@v4

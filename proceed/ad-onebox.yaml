@@ -9,6 +9,7 @@ args:
   gpus: [3]
   raw_data_root: /cdz/geffenlab/raw_data
   processed_data_root: /cdz/geffenlab/processed_data
+  scratch_root: /vol/cortex/nvme-scratch/geffenlab
   experimenter: AD
   subject: AD025
   date: "03102026"
@@ -22,6 +23,7 @@ prototype:
   volumes:
     $raw_data_root/$experimenter/$subject/$date: $raw_data_root/$experimenter/$subject/$date
     $processed_data_root/$experimenter/$subject/$date: $processed_data_root/$experimenter/$subject/$date
+    $scratch_root/$experimenter/$subject/$date: $scratch_root/$experimenter/$subject/$date
   working_dir: $processed_data_root/$experimenter/$subject/$date
 
 steps:
@@ -42,7 +44,7 @@ steps:
      - "catgt/**/*.txt"
 
   - name: kilosort4
-    image: ghcr.io/geffenlab/geffenlab-kilosort4:v0.0.4
+    image: ghcr.io/geffenlab/geffenlab-kilosort4:v0.0.5
     # https://docs.pytorch.org/docs/2.12/notes/cuda.html#optimizing-memory-usage-with-pytorch-alloc-conf
     environment:
       PYTORCH_ALLOC_CONF: "expandable_segments:True"
@@ -53,6 +55,7 @@ steps:
       --ap-meta-pattern, "**/*.ap.meta",
       --kilosort-settings-pattern, "$raw_data_root/$experimenter/$subject/**/*-kilosort4-settings.json",
       --results-dir, $processed_data_root/$experimenter/$subject/$date/kilosort4,
+      --scratch-dir, $scratch_root/$experimenter/$subject/$date,
     ]
     progress_file: $processed_data_root/$experimenter/$subject/$date/kilosort4/progress.txt
     match_in:

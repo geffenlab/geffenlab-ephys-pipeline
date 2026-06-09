@@ -6,6 +6,7 @@ args:
   raw_data_root: raw_data
   processed_data_root: processed_data
   analysis_root: analysis
+  scratch_root: scratch
   experimenter: CI
   subject: AS20-minimal3
   date: "03112025"
@@ -21,6 +22,7 @@ prototype:
     $raw_data_root/$experimenter/$subject/$date: $raw_data_root/$experimenter/$subject/$date
     $processed_data_root/$experimenter/$subject/$date: $processed_data_root/$experimenter/$subject/$date
     $analysis_root/$experimenter/$subject/$date: $analysis_root/$experimenter/$subject/$date
+    $scratch_root/$experimenter/$subject/$date: $scratch_root/$experimenter/$subject/$date
   working_dir: $processed_data_root/$experimenter/$subject/$date
 
 steps:
@@ -41,7 +43,7 @@ steps:
      - "catgt/**/*.txt"
 
   - name: kilosort4
-    image: ghcr.io/geffenlab/geffenlab-kilosort4:v0.0.4
+    image: ghcr.io/geffenlab/geffenlab-kilosort4:v0.0.5
     gpus: $gpus
     command: [
       --input-dir, "$processed_data_root/$experimenter/$subject/$date/catgt",
@@ -49,6 +51,7 @@ steps:
       --ap-meta-pattern, "**/*.ap.meta",
       --kilosort-settings-pattern, "$raw_data_root/$experimenter/$subject/**/*-kilosort4-settings.json",
       --results-dir, $processed_data_root/$experimenter/$subject/$date/kilosort4,
+      --scratch-dir, $scratch_root/$experimenter/$subject/$date,
     ]
     progress_file: $processed_data_root/$experimenter/$subject/$date/kilosort4/progress.txt
     match_in:
