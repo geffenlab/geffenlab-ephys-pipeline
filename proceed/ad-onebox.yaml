@@ -48,6 +48,9 @@ steps:
     # https://docs.pytorch.org/docs/2.12/notes/cuda.html#optimizing-memory-usage-with-pytorch-alloc-conf
     environment:
       PYTORCH_ALLOC_CONF: "expandable_segments:True"
+      OMP_NUM_THREADS: "16"
+      OPENBLAS_NUM_THREADS: "16"
+      MKL_NUM_THREADS: "16"
     gpus: $gpus
     command: [
       --input-dir, "$processed_data_root/$experimenter/$subject/$date/catgt",

@@ -44,6 +44,11 @@ steps:
 
   - name: kilosort4
     image: ghcr.io/geffenlab/geffenlab-kilosort4:v0.0.5
+    environment:
+      PYTORCH_ALLOC_CONF: "expandable_segments:True"
+      OMP_NUM_THREADS: "16"
+      OPENBLAS_NUM_THREADS: "16"
+      MKL_NUM_THREADS: "16"
     gpus: $gpus
     command: [
       --input-dir, "$processed_data_root/$experimenter/$subject/$date/catgt",
