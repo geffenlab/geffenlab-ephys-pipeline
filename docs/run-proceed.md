@@ -369,7 +369,7 @@ for index, dataset in enumerate(datasets):
                 #"--force-rerun",
                 #"--step-names", "bombcell",
             ]
-        exit_code = main(proceed_args)
+            exit_code = main(proceed_args)
 
         if exit_code != 0:
             raise ValueError(f"Proceed gave nonzero exit code {exit_code}, please see logs in proceed_out/")
