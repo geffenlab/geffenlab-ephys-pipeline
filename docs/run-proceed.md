@@ -187,6 +187,27 @@ Based on this summary, it would make sense to choose either `gpus="[2]"` or `gpu
 
 You can speify GPUs by device index (as above) or by UUID (see `nvidia-smi -L` for device UUIDs).
 
+## letting `gpu-lease` choose a GPU for you
+
+Cortex has a command line tool called `gpu-lease` which can choose an available GPU for you.
+If all GPUs are busy, `gpu-lease` will block and wait for an available GPU before running your command.
+It'll report which GPU it chose in an environment variable, `CUDA_VISIBLE_DEVICES`.
+This allows us to integrate `gpu-lease` with `proceed run` on the command line, with no code changes.
+
+Here's one of our `proceed run` examples from above, adapated to work with `gpu-lease`:
+
+```
+# Use our conda environment with Python, etc.
+conda activate geffen-pipelines
+
+cd ~/geffenlab-ephys-pipeline
+
+gpu-lease run --vram=12 -- /bin/sh -c 'proceed run proceed/as-nidq.yaml --args experimenter=BH subject=AS20-demo date="03112025" gpus=[$CUDA_VISIBLE_DEVICES]'
+```
+
+We call `gpu-lease`, to request 12GB of GPU memory.  We pass in our `proceed run` command within single quotes `'proceed run qqq...'`.
+We add `gpus=[$CUDA_VISIBLE_DEVICES]` to tell the Proceed pipeline which GPU was chosen by for us, by `gpu-lease`.
+
 # Configuring pipelines
 
 Please see [pipeline-config.md](./pipeline-config.md) for more details about how to configure various pipeline options.
@@ -307,6 +328,8 @@ import sys
 
 from proceed.cli import main
 
+import gpu_lease
+
 
 # Enable formatted console logging for this script.
 logging.basicConfig(
@@ -332,15 +355,20 @@ for index, dataset in enumerate(datasets):
     try:
         logging.info(f"Starting on dataset {index + 1}/{len(datasets)}: {dataset}\n")
 
-        # Call proceed -- this is equivalent to "proceed run ..." from the command line.
-        # You could add other command line arguments here, like --args gpus=[x], --force-rerun, --step-names, etc.
-        (experimenter, subject, date) = dataset
-        proceed_args = [
-            "run", pipeline_yaml,
-            "--args", f"experimenter={experimenter}", f"subject={subject}", f"date={date}", #"gpus=[2]",
-            #"--force-rerun",
-            #"--step-names", "bombcell",
-        ]
+        # Lease a GPU from cortex/brains.
+        with gpu_lease.reserve(vram_gb=12) as lease:
+            logging.info(f"Leased GPU {lease.gpu_id}")
+
+            # Call proceed -- this is equivalent to "proceed run ..." from the command line.
+            # This tells proceed which GPU we leased from cortex, via the gpus pipeline arg.
+            # You could add other command line arguments here, like --args --force-rerun, --step-names, etc.
+            (experimenter, subject, date) = dataset
+            proceed_args = [
+                "run", pipeline_yaml,
+                "--args", f"experimenter={experimenter}", f"subject={subject}", f"date={date}", f"gpus=[{lease.gpu_id}]",
+                #"--force-rerun",
+                #"--step-names", "bombcell",
+            ]
         exit_code = main(proceed_args)
 
         if exit_code != 0:
@@ -376,6 +404,9 @@ python my-proceed-batch.py
 
 The Python `try:` block will trap errors during processing, including errors in the script itself and errors reported by Proceed.
 The script will collect errors as they come, move on to the next dataset, and summarize any errors at the end.
+
+The `with gpu_lease.reserve(vram_gb=12) as lease:` block uses the `gpu_lease` tool on cortex to block and wait until a GPU wth 12GB of RAM is available.
+We use `gpus=[{lease.gpu_id}]` to tell the pipeline which GPU was chosen for us by `gpu_lease`.
 
 ## reviewing batch results
 
