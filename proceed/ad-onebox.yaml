@@ -142,3 +142,28 @@ steps:
     match_out:
      - "kilosort4/**/*.tsv"
      - "kilosort4/**/*.png"
+
+  - name: summary
+    image: ghcr.io/geffenlab/geffenlab-data-summary:v0.0.7
+    command: [
+      --raw-data-root, $raw_data_root,
+      --processed-data-root, $processed_data_root,
+      --analysis-root, $analysis_root,
+      --experimenter, $experimenter,
+      --subject, $subject,
+      --date, $date,
+      --phy-tsv-names, cluster_group, cluster_info, cluster_KSLabel, cluster_peak_channel,
+      --phy-npy-names, spike_clusters, channel_map,
+    ]
+    progress_file: $analysis_root/$experimenter/$subject/$date/summary/progress.txt
+    match_in:
+     - "behavior/**/*.txt"
+     - "behavior/**/*.mat"
+     - "kilosort4/**/*.tsv"
+     - "kilosort4/**/templates.npy"
+     - "kilosort4/**/spike_clusters.npy"
+     - "kilosort4/**/spike_times.npy"
+     - "kilosort4/**/spike_times_original.npy"
+     - "tprime/**/*.txt"
+    match_out:
+     - "**/*.pkl"
