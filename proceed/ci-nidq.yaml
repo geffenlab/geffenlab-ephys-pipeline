@@ -19,10 +19,10 @@ args:
 prototype:
   user: $user
   volumes:
-    $raw_data_root/$experimenter/$subject/$date: $raw_data_root/$experimenter/$subject/$date
-    $processed_data_root/$experimenter/$subject/$date: $processed_data_root/$experimenter/$subject/$date
-    $analysis_root/$experimenter/$subject/$date: $analysis_root/$experimenter/$subject/$date
-    $scratch_root/$experimenter/$subject/$date: $scratch_root/$experimenter/$subject/$date
+    $raw_data_root/$experimenter: $raw_data_root/$experimenter
+    $processed_data_root/$experimenter: $processed_data_root/$experimenter
+    $analysis_root/$experimenter: $analysis_root/$experimenter
+    $scratch_root/$experimenter: $scratch_root/$experimenter
   working_dir: $processed_data_root/$experimenter/$subject/$date
 
 steps:
