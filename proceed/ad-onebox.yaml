@@ -145,7 +145,7 @@ steps:
      - "kilosort4/**/*.png"
 
   - name: summary
-    image: ghcr.io/geffenlab/geffenlab-data-summary:v0.0.8
+    image: ghcr.io/geffenlab/geffenlab-data-summary:v0.0.9
     command: [
       --raw-data-root, $raw_data_root,
       --processed-data-root, $processed_data_root,
