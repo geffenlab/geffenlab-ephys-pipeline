@@ -37,10 +37,10 @@ steps:
     ]
     progress_file: $processed_data_root/$experimenter/$subject/$date/catgt/progress.txt
     match_in:
-     - "ecephys/**/*.meta"
+     - "$subject/$date/ecephys/**/*.meta"
     match_out:
-     - "catgt/**/*.meta"
-     - "catgt/**/*.txt"
+     - "$subject/$date/catgt/**/*.meta"
+     - "$subject/$date/catgt/**/*.txt"
 
   - name: kilosort4
     image: ghcr.io/geffenlab/geffenlab-kilosort4:v0.0.5
@@ -60,15 +60,15 @@ steps:
     ]
     progress_file: $processed_data_root/$experimenter/$subject/$date/kilosort4/progress.txt
     match_in:
-     - "catgt/**/*.meta"
+     - "$subject/$date/catgt/**/*.meta"
     match_out:
-     - "kilosort4/**/params.py"
-     - "kilosort4/**/*.prb"
-     - "kilosort4/**/*.tsv"
-     - "kilosort4/**/*.png"
-     - "kilosort4/**/templates.npy"
-     - "kilosort4/**/spike_clusters.npy"
-     - "kilosort4/**/spike_times.npy"
+     - "$subject/$date/kilosort4/**/params.py"
+     - "$subject/$date/kilosort4/**/*.prb"
+     - "$subject/$date/kilosort4/**/*.tsv"
+     - "$subject/$date/kilosort4/**/*.png"
+     - "$subject/$date/kilosort4/**/templates.npy"
+     - "$subject/$date/kilosort4/**/spike_clusters.npy"
+     - "$subject/$date/kilosort4/**/spike_times.npy"
 
   - name: tprime
     image: ghcr.io/geffenlab/geffenlab-spikeglx-tools:v0.0.20
@@ -87,13 +87,13 @@ steps:
     ]
     progress_file: $processed_data_root/$experimenter/$subject/$date/tprime/progress.txt
     match_in:
-     - "catgt/**/*.txt"
-     - "kilosort4/**/spike_times.npy"
+     - "$subject/$date/catgt/**/*.txt"
+     - "$subject/$date/kilosort4/**/spike_times.npy"
     match_out:
-     - "kilosort4/**/spike_times.npy"
-     - "kilosort4/**/spike_times_original.npy"
-     - "tprime/**/*.txt"
-     - "tprime/**/*.npy"
+     - "$subject/$date/kilosort4/**/spike_times.npy"
+     - "$subject/$date/kilosort4/**/spike_times_original.npy"
+     - "$subject/$date/tprime/**/*.txt"
+     - "$subject/$date/tprime/**/*.npy"
 
   - name: bombcell
     image: ghcr.io/geffenlab/geffenlab-bombcell:v0.0.8
@@ -108,16 +108,16 @@ steps:
     ]
     progress_file: $processed_data_root/$experimenter/$subject/$date/bombcell/progress.txt
     match_in:
-     - "kilosort4/**/params.py"
-     - "kilosort4/**/*.tsv"
-     - "kilosort4/**/*.png"
-     - "kilosort4/**/templates.npy"
-     - "kilosort4/**/spike_clusters.npy"
-     - "kilosort4/**/spike_times.npy"
-     - "kilosort4/**/spike_times_original.npy"
+     - "$subject/$date/kilosort4/**/params.py"
+     - "$subject/$date/kilosort4/**/*.tsv"
+     - "$subject/$date/kilosort4/**/*.png"
+     - "$subject/$date/kilosort4/**/templates.npy"
+     - "$subject/$date/kilosort4/**/spike_clusters.npy"
+     - "$subject/$date/kilosort4/**/spike_times.npy"
+     - "$subject/$date/kilosort4/**/spike_times_original.npy"
     match_out:
-     - "kilosort4/**/*.tsv"
-     - "kilosort4/**/*.png"
+     - "$subject/$date/kilosort4/**/*.tsv"
+     - "$subject/$date/kilosort4/**/*.png"
 
   - name: summary
     image: ghcr.io/geffenlab/geffenlab-data-summary:v0.0.10
@@ -137,13 +137,13 @@ steps:
     ]
     progress_file: $analysis_root/$experimenter/$subject/$date/summary/progress.txt
     match_in:
-     - "behavior/**/*.txt"
-     - "behavior/**/*.mat"
-     - "kilosort4/**/*.tsv"
-     - "kilosort4/**/templates.npy"
-     - "kilosort4/**/spike_clusters.npy"
-     - "kilosort4/**/spike_times.npy"
-     - "kilosort4/**/spike_times_original.npy"
-     - "tprime/**/*.txt"
+     - "$subject/$date/behavior/**/*.txt"
+     - "$subject/$date/behavior/**/*.mat"
+     - "$subject/$date/kilosort4/**/*.tsv"
+     - "$subject/$date/kilosort4/**/templates.npy"
+     - "$subject/$date/kilosort4/**/spike_clusters.npy"
+     - "$subject/$date/kilosort4/**/spike_times.npy"
+     - "$subject/$date/kilosort4/**/spike_times_original.npy"
+     - "$subject/$date/tprime/**/*.txt"
     match_out:
-     - "summary/**/*.pkl"
+     - "$subject/$date/summary/**/*.pkl"
