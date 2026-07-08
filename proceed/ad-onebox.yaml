@@ -9,6 +9,7 @@ args:
   gpus: [3]
   raw_data_root: /cdz/geffenlab/raw_data
   processed_data_root: /cdz/geffenlab/processed_data
+  analysis_root: /cdz/geffenlab/analysis
   scratch_root: /vol/cortex/nvme-scratch/geffenlab
   experimenter: AD
   subject: AD025
