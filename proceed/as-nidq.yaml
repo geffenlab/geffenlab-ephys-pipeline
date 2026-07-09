@@ -133,7 +133,7 @@ steps:
      - "$subject/$date/kilosort4/**/*.png"
 
   - name: summary
-    image: ghcr.io/geffenlab/geffenlab-data-summary:v0.0.10
+    image: ghcr.io/geffenlab/geffenlab-data-summary:v0.0.11
     command: [
       --raw-data-root, $raw_data_root,
       --processed-data-root, $processed_data_root,
