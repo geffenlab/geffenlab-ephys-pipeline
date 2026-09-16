@@ -117,7 +117,7 @@ steps:
       $processed_data_root/$experimenter/$subject/$date/kilosort4,
       --probe-ids, imec0, imec1,
       --probe-params-pattern, "*/params.py",
-      --bombcell-params-pattern, "$raw_data_root/$experimenter/bombcell_params.json"
+      --bombcell-params-pattern, "$raw_data_root/$experimenter/$subject/**/*-bombcell-parameters.json"
     ]
     progress_file: $processed_data_root/$experimenter/$subject/$date/bombcell/progress.txt
     match_in:
