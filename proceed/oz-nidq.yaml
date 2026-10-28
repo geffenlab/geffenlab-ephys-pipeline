@@ -1,0 +1,162 @@
+# On cortex:
+# conda activate geffen-pipelines
+# cd ~/geffenlab-ephys-pipeline
+# proceed run proceed/as-nidq.yaml --args experimenter=AS subject=AS20 date="03112025"
+# proceed run proceed/as-nidq.yaml --args experimenter=AS subject=AS40 date="01062026"
+# proceed run proceed/as-nidq.yaml --args experimenter=AS subject=AS20 date="02062025"
+# proceed run proceed/as-nidq.yaml --args experimenter=AS subject=AS20 date="01312025"
+#
+# On Ben's laptop:
+# conda activate geffen-pipelines
+# cd ~/codin/geffenlab-ephys-pipeline
+# proceed run proceed/as-nidq.yaml --args experimenter=BH subject=AS20-minimal3 date="03112025" raw_data_root=/home/ninjaben/codin/geffen-lab-data/raw_data processed_data_root=/home/ninjaben/codin/geffen-lab-data/processed_data analysis_root=/home/ninjaben/codin/geffen-lab-data/analysis gpus=false user=self
+
+version: 0.0.11
+args:
+  user: "0:0"
+  gpus: [3]
+  raw_data_root: /cdz/geffenlab/raw_data
+  processed_data_root: /cdz/geffenlab/processed_data
+  analysis_root: /cdz/geffenlab/analysis
+  scratch_root: /vol/cortex/nvme-scratch/geffenlab
+  experimenter: SX
+  subject: SX001
+  date: "10202026"
+  catgt_args: "-prb_fld -out_prb_fld -ni -ap -lf -apfilter=butter,12,300,10000 -lffilter=butter,12,1,500 -gblcar -gfix=0.4,0.1,0.02 -xa=0,0,0,1,3,500 -xia=0,0,1,3,3,0 -xd=0,0,8,3,0 -xid=0,0,-1,2,1.7 -xid=0,0,-1,3,5"
+  tprime_to_sync_pattern: "*/*.imec0.ap.*.txt"
+  tprime_events_sync_pattern: "*.nidq.xd_8_4_500.txt"
+  tprime_events_pattern: "*.nidq.*.txt"
+  summary_events_pattern: "tprime/*/*nidq.xd_8_3_0.txt"
+
+prototype:
+  user: $user
+  volumes:
+    $raw_data_root/$experimenter: $raw_data_root/$experimenter
+    $processed_data_root/$experimenter: $processed_data_root/$experimenter
+    $analysis_root/$experimenter: $analysis_root/$experimenter
+    $scratch_root/$experimenter: $scratch_root/$experimenter
+  working_dir: $processed_data_root/$experimenter/$subject/$date
+
+steps:
+
+  - name: catgt
+    image: ghcr.io/geffenlab/geffenlab-spikeglx-tools:v0.0.20
+    command: [
+      /opt/code/catgt.py,
+      $raw_data_root/$experimenter/$subject/$date/ecephys/,
+      $processed_data_root/$experimenter/$subject/$date/catgt,
+      $catgt_args
+    ]
+    progress_file: $processed_data_root/$experimenter/$subject/$date/catgt/progress.txt
+    match_in:
+     - "$subject/$date/ecephys/**/*.meta"
+    match_out:
+     - "$subject/$date/catgt/**/*.meta"
+     - "$subject/$date/catgt/**/*.txt"
+
+  - name: kilosort4
+    image: ghcr.io/geffenlab/geffenlab-kilosort4:v0.0.5
+    # https://docs.pytorch.org/docs/2.12/notes/cuda.html#optimizing-memory-usage-with-pytorch-alloc-conf
+    environment:
+      PYTORCH_ALLOC_CONF: "expandable_segments:True"
+      OMP_NUM_THREADS: "16"
+      OPENBLAS_NUM_THREADS: "16"
+      MKL_NUM_THREADS: "16"
+    gpus: $gpus
+    command: [
+      --input-dir, "$processed_data_root/$experimenter/$subject/$date/catgt",
+      --probe-ids, "imec0", "imec1",
+      --ap-meta-pattern, "**/*.ap.meta",
+      --kilosort-settings-pattern, "$raw_data_root/$experimenter/$subject/**/*-kilosort4-settings.json",
+      --results-dir, $processed_data_root/$experimenter/$subject/$date/kilosort4,
+      --scratch-dir, $scratch_root/$experimenter/$subject/$date,
+    ]
+    progress_file: $processed_data_root/$experimenter/$subject/$date/kilosort4/progress.txt
+    match_in:
+     - "$subject/$date/catgt/**/*.meta"
+    match_out:
+     - "$subject/$date/kilosort4/**/params.py"
+     - "$subject/$date/kilosort4/**/*.prb"
+     - "$subject/$date/kilosort4/**/*.tsv"
+     - "$subject/$date/kilosort4/**/*.png"
+     - "$subject/$date/kilosort4/**/templates.npy"
+     - "$subject/$date/kilosort4/**/spike_clusters.npy"
+     - "$subject/$date/kilosort4/**/spike_times.npy"
+
+  - name: tprime
+    image: ghcr.io/geffenlab/geffenlab-spikeglx-tools:v0.0.20
+    command: [
+      /opt/code/tprime.py,
+      $processed_data_root/$experimenter/$subject/$date/catgt,
+      $processed_data_root/$experimenter/$subject/$date/kilosort4,
+      $processed_data_root/$experimenter/$subject/$date/tprime,
+      --to-sync-pattern, $tprime_to_sync_pattern,
+      --events-sync-pattern, $tprime_events_sync_pattern,
+      --events-pattern, $tprime_events_pattern,
+      --probe-ids, imec0, imec1,
+      --probe-sync-pattern, "*/*.ap.*.txt",
+      --probe-spikes-pattern, "*/spike_times.npy",
+      --probe-params-pattern, "*/params.py"
+    ]
+    progress_file: $processed_data_root/$experimenter/$subject/$date/tprime/progress.txt
+    match_in:
+     - "$subject/$date/catgt/**/*.txt"
+     - "$subject/$date/kilosort4/**/spike_times.npy"
+    match_out:
+     - "$subject/$date/kilosort4/**/spike_times.npy"
+     - "$subject/$date/kilosort4/**/spike_times_original.npy"
+     - "$subject/$date/tprime/**/*.txt"
+     - "$subject/$date/tprime/**/*.npy"
+
+  - name: bombcell
+    image: ghcr.io/geffenlab/geffenlab-bombcell:v0.0.8
+    # https://github.com/joblib/loky/blob/master/loky/backend/context.py#L88
+    environment:
+      LOKY_MAX_CPU_COUNT: "10"
+    command: [
+      $processed_data_root/$experimenter/$subject/$date/kilosort4,
+      --probe-ids, imec0, imec1,
+      --probe-params-pattern, "*/params.py",
+      --bombcell-params-pattern, "$raw_data_root/$experimenter/$subject/**/*-bombcell-parameters.json"
+    ]
+    progress_file: $processed_data_root/$experimenter/$subject/$date/bombcell/progress.txt
+    match_in:
+     - "$subject/$date/kilosort4/**/params.py"
+     - "$subject/$date/kilosort4/**/*.tsv"
+     - "$subject/$date/kilosort4/**/*.png"
+     - "$subject/$date/kilosort4/**/templates.npy"
+     - "$subject/$date/kilosort4/**/spike_clusters.npy"
+     - "$subject/$date/kilosort4/**/spike_times.npy"
+     - "$subject/$date/kilosort4/**/spike_times_original.npy"
+    match_out:
+     - "$subject/$date/kilosort4/**/*.tsv"
+     - "$subject/$date/kilosort4/**/*.png"
+
+  - name: summary
+    image: ghcr.io/geffenlab/geffenlab-data-summary:v0.0.11
+    command: [
+      --raw-data-root, $raw_data_root,
+      --processed-data-root, $processed_data_root,
+      --analysis-root, $analysis_root,
+      --experimenter, $experimenter,
+      --subject, $subject,
+      --date, $date,
+      --session-key-words, testing, training,
+      --phy-tsv-names, cluster_group, cluster_info, cluster_KSLabel, cluster_peak_channel,
+      --phy-npy-names, spike_clusters, channel_map,
+      --stim-times-pattern, $summary_events_pattern,
+      --stim-edges, "-0.5", "1.0", "0.02",
+      --resp-edges, "-1.0", "1.0", "0.02",
+    ]
+    progress_file: $analysis_root/$experimenter/$subject/$date/summary/progress.txt
+    match_in:
+     - "$subject/$date/behavior/**/*.txt"
+     - "$subject/$date/behavior/**/*.mat"
+     - "$subject/$date/kilosort4/**/*.tsv"
+     - "$subject/$date/kilosort4/**/templates.npy"
+     - "$subject/$date/kilosort4/**/spike_clusters.npy"
+     - "$subject/$date/kilosort4/**/spike_times.npy"
+     - "$subject/$date/kilosort4/**/spike_times_original.npy"
+     - "$subject/$date/tprime/**/*.txt"
+    match_out:
+     - "$subject/$date/summary/**/*.pkl"
